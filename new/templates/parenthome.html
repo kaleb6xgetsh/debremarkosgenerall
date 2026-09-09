@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Parent Home - Debre Markos Secondary School</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #047857;
+            --ethio-green: #078930;
+            --ethio-yellow: #FCDD09;
+            --ethio-red: #DA121A;
+            --text-dark: #1f2937;
+            --text-soft: #4b5563;
+            --bg-light: #f9fafb;
+            --shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: #f0f4f8;
+        }
+
+        .ethiopian-flag {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            height: 5px;
+            z-index: 1001;
+        }
+        .ethiopian-flag .green { flex: 1; background: var(--ethio-green); }
+        .ethiopian-flag .yellow { flex: 1; background: var(--ethio-yellow); }
+        .ethiopian-flag .red { flex: 1; background: var(--ethio-red); }
+
+        nav {
+            width: 100%;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #e5e7eb;
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 5px;
+            left: 0;
+            z-index: 999;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary-green);
+        }
+        .nav-logo i {
+            margin-right: 8px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+        .nav-links a.active {
+            background: var(--primary-green);
+            color: white;
+        }
+        .nav-links a.logout {
+            background: var(--ethio-red);
+            color: white;
+        }
+        .nav-links a.logout:hover {
+            background: #b91c1c;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        .main-content {
+            padding-top: 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 40px;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary-green), #065f46);
+            border-radius: 28px;
+            padding: 30px 35px;
+            color: white;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .welcome-banner::before {
+            content: "👨‍👩‍👦";
+            position: absolute;
+            right: 20px;
+            bottom: 10px;
+            font-size: 100px;
+            opacity: 0.15;
+        }
+        .welcome-banner h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        .welcome-banner p {
+            opacity: 0.9;
+            font-size: 15px;
+        }
+        .parent-badge {
+            background: var(--ethio-yellow);
+            color: var(--text-dark);
+            display: inline-block;
+            padding: 4px 15px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        .child-selector {
+            background: rgba(255,255,255,0.15);
+            border-radius: 16px;
+            padding: 14px 20px;
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .child-selector label {
+            font-weight: 600;
+            color: white;
+            font-size: 14px;
+        }
+        .child-selector select {
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            background: white;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 14px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-green), #065f46);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+        .stat-info h3 {
+            font-size: 12px;
+            color: var(--text-soft);
+            margin-bottom: 2px;
+        }
+        .stat-info .value {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title i {
+            color: var(--primary-green);
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+        .action-btn {
+            background: white;
+            border-radius: 16px;
+            padding: 18px 14px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+        }
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-green);
+        }
+        .action-btn i {
+            font-size: 28px;
+            color: var(--primary-green);
+            margin-bottom: 6px;
+        }
+        .action-btn span {
+            display: block;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .card-header h3 {
+            font-size: 17px;
+            color: var(--text-dark);
+        }
+        .card-header a {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        .activity-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--bg-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-green);
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .activity-detail p {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .activity-detail small {
+            color: var(--text-soft);
+            font-size: 11px;
+        }
+
+        .announcement-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .announcement-item:last-child {
+            border-bottom: none;
+        }
+        .announcement-item h4 {
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+        .announcement-item p {
+            font-size: 12px;
+            color: var(--text-soft);
+        }
+        .announcement-item .date {
+            font-size: 10px;
+            color: var(--primary-green);
+            margin-top: 4px;
+        }
+
+        .subject-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+        .subject-item:last-child {
+            border-bottom: none;
+        }
+        .subject-item .name {
+            font-weight: 500;
+        }
+        .subject-item .score {
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        .msg-badge {
+            position: relative;
+        }
+        .msg-badge .badge {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background: var(--ethio-red);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 30px;
+            min-width: 16px;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .btn-primary {
+            background: var(--ethio-red);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: transparent;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 10px 16px; }
+            .nav-links { display: none; flex-direction: column; width: 100%; padding-top: 10px; }
+            .nav-links.show { display: flex; }
+            .nav-links a { width: 100%; text-align: center; padding: 8px; }
+            .menu-toggle { display: block; }
+            .welcome-banner h1 { font-size: 22px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .two-columns { grid-template-columns: 1fr; }
+            .actions-grid { grid-template-columns: repeat(3, 1fr); }
+            .main-content { padding-top: 70px; padding-left: 12px; padding-right: 12px; }
+            .child-selector { flex-direction: column; align-items: stretch; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .actions-grid { grid-template-columns: repeat(2, 1fr); }
+            .welcome-banner { padding: 20px; }
+            .welcome-banner h1 { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ethiopian-flag">
+        <div class="green"></div>
+        <div class="yellow"></div>
+        <div class="red"></div>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo"><i class="fas fa-school"></i> DMSS</div>
+            <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            <div class="nav-links" id="navLinks">
+                <a href="/parenthome" class="active">Home</a>
+                <a href="/results">Results</a>
+                <a href="/attendance">Attendance</a>
+                <a href="/teachers">Teachers</a>
+                <a href="/messages" class="msg-badge">Messages <span class="badge" id="msgBadge">0</span></a>
+                <a href="/contact">Contact</a>
+                <a href="/gallery">Gallery</a>
+                <a href="/news">News</a>
+                <a href="/profile">Profile</a>
+                <a href="/logout" class="logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content" id="mainContent">
+        <!-- Rendered by JavaScript -->
+    </div>
+
+    <script>
+        // ============================================
+        // Toggle Mobile Menu
+        // ============================================
+
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('show');
+        }
+
+        // ============================================
+        // Get Current User
+        // ============================================
+
+        const currentUser = JSON.parse(sessionStorage.getItem('current_user')) || JSON.parse(localStorage.getItem('current_user'));
+
+        if (!currentUser) {
+            window.location.href = '/login';
+        }
+        if (currentUser && currentUser.role !== 'parent') {
+            window.location.href = '/login';
+        }
+
+        // ============================================
+        // Get User Profile
+        // ============================================
+
+        let userProfile = JSON.parse(localStorage.getItem(`user_profile_${currentUser.email}`)) || currentUser;
+
+        // ============================================
+        // Get Unread Message Count
+        // ============================================
+
+        function getUnreadCount() {
+            const messages = JSON.parse(localStorage.getItem(`messages_${currentUser.email}`)) || {};
+            let count = 0;
+            Object.keys(messages).forEach(key => {
+                const msgs = messages[key] || [];
+                count += msgs.filter(m => !m.read && m.sender !== currentUser.email).length;
+            });
+            return count;
+        }
+
+        function updateBadge() {
+            const count = getUnreadCount();
+            const badge = document.getElementById('msgBadge');
+            if (badge) {
+                badge.textContent = count;
+                if (count === 0) {
+                    badge.style.display = 'none';
+                } else {
+                    badge.style.display = 'inline-block';
+                }
+            }
+        }
+
+        // ============================================
+        // Parent Data with Children
+        // ============================================
+
+        let parentData = {
+            name: userProfile.name || 'Parent',
+            children: [
+                { 
+                    id: 1, 
+                    name: userProfile.child_name || 'Biruk Alemu', 
+                    grade: userProfile.child_grade || 'Grade 10', 
+                    section: userProfile.child_section || 'A', 
+                    avgGrade: 87.5, 
+                    attendance: 96,
+                    subjects: [
+                        { name: 'Mathematics', score: 88 },
+                        { name: 'English', score: 85 },
+                        { name: 'Physics', score: 82 },
+                        { name: 'Chemistry', score: 90 },
+                        { name: 'Biology', score: 87 }
+                    ]
+                },
+                { 
+                    id: 2, 
+                    name: 'Meron Alemu', 
+                    grade: 'Grade 8', 
+                    section: 'C', 
+                    avgGrade: 91.2, 
+                    attendance: 98,
+                    subjects: [
+                        { name: 'Mathematics', score: 96 },
+                        { name: 'English', score: 92 },
+                        { name: 'Physics', score: 90 },
+                        { name: 'Chemistry', score: 94 },
+                        { name: 'Biology', score: 88 }
+                    ]
+                }
+            ]
+        };
+
+        let currentChildIndex = 0;
+
+        // ============================================
+        // Render Parent Home
+        // ============================================
+
+        function renderParentHome() {
+            const container = document.getElementById('mainContent');
+            const child = parentData.children[currentChildIndex] || parentData.children[0];
+            const name = parentData.name;
+            const childName = child.name;
+            const unread = getUnreadCount();
+            const unreadDisplay = unread > 0 ? `${unread} <span style="background: var(--ethio-red); color: white; border-radius: 50%; padding: 2px 8px; font-size: 12px; margin-left: 5px;">New</span>` : '0';
+
+            // Subject rows
+            const subjectRows = child.subjects.map(s => `
+                <div class="subject-item">
+                    <span class="name">${s.name}</span>
+                    <span class="score">${s.score}%</span>
+                </div>
+            `).join('');
+
+            container.innerHTML = `
+                <!-- Welcome Banner -->
+                <div class="welcome-banner">
+                    <h1>Welcome, ${name}! 👨‍👩‍👦</h1>
+                    <p>Parent Dashboard | Tracking Your Children's Progress</p>
+                    <div class="parent-badge">👨‍👩‍👦 ${parentData.children.length} Children Enrolled</div>
+                    <div class="child-selector">
+                        <label><i class="fas fa-child"></i> Select Your Child:</label>
+                        <select id="childSelect" onchange="changeChild()">
+                            ${parentData.children.map((c, idx) => 
+                                `<option value="${idx}">${c.name} (${c.grade} - Section ${c.section})</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card" onclick="window.location.href='/results'">
+                        <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="stat-info">
+                            <h3>${childName}'s Average</h3>
+                            <div class="value">${child.avgGrade}%</div>
+                        </div>
+                    </div>
+                    <div class="stat-card" onclick="window.location.href='/attendance'">
+                        <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                        <div class="stat-info">
+                            <h3>${childName}'s Attendance</h3>
+                            <div class="value">${child.attendance}%</div>
+                        </div>
+                    </div>
+                    <div class="stat-card" onclick="window.location.href='/messages'">
+                        <div class="stat-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="stat-info">
+                            <h3>Messages</h3>
+                            <div class="value" style="font-size: 18px;">${unreadDisplay}</div>
+                        </div>
+                    </div>
+                    <div class="stat-card" onclick="window.location.href='/teachers'">
+                        <div class="stat-icon"><i class="fas fa-chalkboard-user"></i></div>
+                        <div class="stat-info">
+                            <h3>Teachers</h3>
+                            <div class="value" style="font-size: 16px;">Contact Staff</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    <span>Quick Actions</span>
+                </div>
+                <div class="actions-grid">
+                    <div class="action-btn" onclick="window.location.href='/results'">
+                        <i class="fas fa-chart-simple"></i>
+                        <span>Results</span>
+                    </div>
+                    <div class="action-btn" onclick="window.location.href='/attendance'">
+                        <i class="fas fa-fingerprint"></i>
+                        <span>Attendance</span>
+                    </div>
+                    <div class="action-btn" onclick="window.location.href='/teachers'">
+                        <i class="fas fa-chalkboard-user"></i>
+                        <span>Teachers</span>
+                    </div>
+                    <div class="action-btn" onclick="window.location.href='/messages'">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messages ${unread > 0 ? `<span style="background: var(--ethio-red); color: white; border-radius: 50%; padding: 1px 7px; font-size: 10px; margin-left: 4px;">${unread}</span>` : ''}</span>
+                    </div>
+                    <div class="action-btn" onclick="window.location.href='/gallery'">
+                        <i class="fas fa-images"></i>
+                        <span>Gallery</span>
+                    </div>
+                    <div class="action-btn" onclick="window.location.href='/contact'">
+                        <i class="fas fa-phone"></i>
+                        <span>Contact</span>
+                    </div>
+                    <div class="action-btn" onclick="window.location.href='/news'">
+                        <i class="fas fa-newspaper"></i>
+                        <span>News</span>
+                    </div>
+                    <div class="action-btn" onclick="window.location.href='/profile'">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Profile</span>
+                    </div>
+                </div>
+
+                <!-- Two Columns -->
+                <div class="two-columns">
+                    <!-- Recent Activity -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                            <a href="#" onclick="return false;">View All →</a>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon"><i class="fas fa-chart-line"></i></div>
+                            <div class="activity-detail">
+                                <p>${childName}'s Results Updated</p>
+                                <small>December 20, 2025</small>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon"><i class="fas fa-calendar"></i></div>
+                            <div class="activity-detail">
+                                <p>Parent-Teacher Meeting: Jan 10</p>
+                                <small>Upcoming</small>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon"><i class="fas fa-bullhorn"></i></div>
+                            <div class="activity-detail">
+                                <p>School Closed: Meskel Holiday</p>
+                                <small>September 27, 2025</small>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="activity-detail">
+                                <p>New Messages</p>
+                                <small>${unread > 0 ? `${unread} unread` : 'No new messages'}</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Child's Performance -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-child"></i> ${childName}'s Performance</h3>
+                            <a href="/results">Full Report →</a>
+                        </div>
+                        ${subjectRows}
+                        <div style="margin-top: 12px; padding-top: 12px; border-top: 2px solid var(--ethio-yellow); text-align: center;">
+                            <strong>Overall Average: ${child.avgGrade}%</strong>
+                            <br>
+                            <small style="color: var(--text-soft); font-size: 12px;">${child.grade} - Section ${child.section}</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Announcements -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-bullhorn"></i> Announcements</h3>
+                        <a href="/news">More →</a>
+                    </div>
+                    <div class="announcement-item">
+                        <h4>📢 Parent-Teacher Conference - January 10, 2026</h4>
+                        <p>Posted: Dec 20, 2025</p>
+                        <div class="date">Save the date</div>
+                    </div>
+                    <div class="announcement-item">
+                        <h4>📋 Term 1 Results Available Online</h4>
+                        <p>Posted: Dec 15, 2025</p>
+                        <div class="date">Check now</div>
+                    </div>
+                    <div class="announcement-item">
+                        <h4>🏆 Golden Students Awards - December 22</h4>
+                        <p>Posted: Dec 10, 2025</p>
+                        <div class="date">Congratulations</div>
+                    </div>
+                    <div class="announcement-item">
+                        <h4>💬 New Messaging System</h4>
+                        <p>Contact teachers directly through messages</p>
+                        <div class="date">Posted: Sep 5, 2025</div>
+                    </div>
+                </div>
+            `;
+            
+            // Set the selected child in dropdown
+            document.getElementById('childSelect').value = currentChildIndex;
+        }
+
+        // ============================================
+        // Change Child
+        // ============================================
+
+        function changeChild() {
+            const select = document.getElementById('childSelect');
+            currentChildIndex = parseInt(select.value);
+            renderParentHome();
+        }
+
+        // ============================================
+        // Auto-refresh badge every 10 seconds
+        // ============================================
+
+        renderParentHome();
+        updateBadge();
+
+        setInterval(() => {
+            updateBadge();
+        }, 10000);
+    </script>
+</body>
+</html>

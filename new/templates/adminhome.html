@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Admin Dashboard - Debre Markos Secondary School</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #047857;
+            --ethio-green: #078930;
+            --ethio-yellow: #FCDD09;
+            --ethio-red: #DA121A;
+            --text-dark: #1f2937;
+            --text-soft: #4b5563;
+            --bg-light: #f9fafb;
+            --shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: #f0f4f8;
+        }
+
+        .ethiopian-flag {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            height: 5px;
+            z-index: 1001;
+        }
+        .ethiopian-flag .green { flex: 1; background: var(--ethio-green); }
+        .ethiopian-flag .yellow { flex: 1; background: var(--ethio-yellow); }
+        .ethiopian-flag .red { flex: 1; background: var(--ethio-red); }
+
+        nav {
+            width: 100%;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #e5e7eb;
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 5px;
+            left: 0;
+            z-index: 999;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary-green);
+        }
+        .nav-logo i {
+            margin-right: 8px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+        .nav-links a.active {
+            background: var(--primary-green);
+            color: white;
+        }
+        .nav-links a.logout {
+            background: var(--ethio-red);
+            color: white;
+        }
+        .nav-links a.logout:hover {
+            background: #b91c1c;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        .main-content {
+            padding-top: 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 40px;
+        }
+
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, #1f2937, #374151);
+            border-radius: 28px;
+            padding: 30px 35px;
+            color: white;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .welcome-banner::before {
+            content: "⚙️";
+            position: absolute;
+            right: 20px;
+            bottom: 10px;
+            font-size: 100px;
+            opacity: 0.1;
+        }
+        .welcome-banner h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        .welcome-banner p {
+            opacity: 0.9;
+            font-size: 15px;
+        }
+        .admin-badge {
+            background: var(--ethio-yellow);
+            color: var(--text-dark);
+            display: inline-block;
+            padding: 4px 15px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+        .stat-icon.green { background: linear-gradient(135deg, var(--primary-green), #065f46); }
+        .stat-icon.blue { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+        .stat-icon.yellow { background: linear-gradient(135deg, #d97706, #b45309); }
+        .stat-icon.red { background: linear-gradient(135deg, var(--ethio-red), #b91c1c); }
+        .stat-icon.purple { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+        .stat-icon.pink { background: linear-gradient(135deg, #db2777, #be185d); }
+        .stat-info h3 {
+            font-size: 12px;
+            color: var(--text-soft);
+            margin-bottom: 2px;
+        }
+        .stat-info .value {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        /* Quick Actions */
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title i {
+            color: var(--primary-green);
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+        .action-btn {
+            background: white;
+            border-radius: 16px;
+            padding: 18px 14px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+        }
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-green);
+        }
+        .action-btn i {
+            font-size: 28px;
+            color: var(--primary-green);
+            margin-bottom: 6px;
+        }
+        .action-btn span {
+            display: block;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        /* Cards */
+        .two-columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .card-header h3 {
+            font-size: 17px;
+            color: var(--text-dark);
+        }
+        .card-header a {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        .activity-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--bg-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-green);
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .activity-detail p {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .activity-detail small {
+            color: var(--text-soft);
+            font-size: 11px;
+        }
+
+        .announcement-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .announcement-item:last-child {
+            border-bottom: none;
+        }
+        .announcement-item h4 {
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+        .announcement-item p {
+            font-size: 12px;
+            color: var(--text-soft);
+        }
+        .announcement-item .date {
+            font-size: 10px;
+            color: var(--primary-green);
+            margin-top: 4px;
+        }
+
+        .msg-badge {
+            position: relative;
+        }
+        .msg-badge .badge {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background: var(--ethio-red);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 30px;
+            min-width: 16px;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .btn-primary {
+            background: var(--ethio-red);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: transparent;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 10px 16px; }
+            .nav-links { display: none; flex-direction: column; width: 100%; padding-top: 10px; }
+            .nav-links.show { display: flex; }
+            .nav-links a { width: 100%; text-align: center; padding: 8px; }
+            .menu-toggle { display: block; }
+            .welcome-banner h1 { font-size: 22px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .two-columns { grid-template-columns: 1fr; }
+            .actions-grid { grid-template-columns: repeat(3, 1fr); }
+            .main-content { padding-top: 70px; padding-left: 12px; padding-right: 12px; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .actions-grid { grid-template-columns: repeat(2, 1fr); }
+            .welcome-banner { padding: 20px; }
+            .welcome-banner h1 { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ethiopian-flag">
+        <div class="green"></div>
+        <div class="yellow"></div>
+        <div class="red"></div>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo"><i class="fas fa-school"></i> DMSS</div>
+            <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            <div class="nav-links" id="navLinks">
+                <a href="/adminhome" class="active">Admin</a>
+                <a href="/admin-report">Reports</a>
+                <a href="/post-news">News</a>
+                <a href="/manage-teachers">Teachers</a>
+                <a href="/manage-students">Students</a>
+                <a href="/manage-parents">Parents</a>
+                <a href="/messages" class="msg-badge">Messages <span class="badge" id="msgBadge">0</span></a>
+                <a href="/profile">Profile</a>
+                <a href="/logout" class="logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content" id="mainContent">
+        <!-- Rendered by JavaScript -->
+    </div>
+
+    <script>
+        // ============================================
+        // Toggle Mobile Menu
+        // ============================================
+
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('show');
+        }
+
+        // ============================================
+        // Get Current User
+        // ============================================
+
+        const currentUser = JSON.parse(sessionStorage.getItem('current_user')) || JSON.parse(localStorage.getItem('current_user'));
+
+        if (!currentUser) {
+            window.location.href = '/login';
+        }
+        if (currentUser && currentUser.role !== 'admin') {
+            window.location.href = '/login';
+        }
+
+        // ============================================
+        // Get User Profile
+        // ============================================
+
+        let userProfile = JSON.parse(localStorage.getItem(`user_profile_${currentUser.email}`)) || currentUser;
+
+        // ============================================
+        // Get Unread Message Count
+        // ============================================
+
+        function getUnreadCount() {
+            const messages = JSON.parse(localStorage.getItem(`messages_${currentUser.email}`)) || {};
+            let count = 0;
+            Object.keys(messages).forEach(key => {
+                const msgs = messages[key] || [];
+                count += msgs.filter(m => !m.read && m.sender !== currentUser.email).length;
+            });
+            return count;
+        }
+
+        function updateBadge() {
+            const count = getUnreadCount();
+            const badge = document.getElementById('msgBadge');
+            if (badge) {
+                badge.textContent = count;
+                if (count === 0) {
+                    badge.style.display = 'none';
+                } else {
+                    badge.style.display = 'inline-block';
+                }
+            }
+        }
+
+        // ============================================
+        // Admin Data - Get from localStorage or API
+        // ============================================
+
+        // For demo, we'll use static data. In production, this comes from the database.
+        let adminData = {
+            name: userProfile.name || 'Admin',
+            stats: {
+                students: 0,
+                teachers: 0,
+                parents: 0,
+                admins: 1,
+                assignments: 0,
+                results: 0,
+                messages: 0
+            },
+            recentActivity: [
+                { icon: 'fa-user-plus', text: 'New Student Registered', time: 'Today, 10:30 AM' },
+                { icon: 'fa-file-alt', text: 'Term 1 Results Published', time: 'Yesterday, 4:00 PM' },
+                { icon: 'fa-tasks', text: '3 Assignments Posted', time: '2 days ago' },
+                { icon: 'fa-envelope', text: '5 New Messages', time: '3 days ago' }
+            ],
+            announcements: [
+                { title: '📢 Staff Professional Development Day - October 15', date: 'Posted: Sep 25, 2025' },
+                { title: '📋 Exam Schedule Released for Term 1', date: 'Posted: Sep 20, 2025' },
+                { title: '🏆 Golden Students Awards Ceremony', date: 'Posted: Sep 15, 2025' }
+            ]
+        };
+
+        // ============================================
+        // Render Admin Home
+        // ============================================
+
+        function renderAdminHome() {
+            const container = document.getElementById('mainContent');
+            const name = adminData.name;
+            const stats = adminData.stats;
+            const unread = getUnreadCount();
+            const unreadDisplay = unread > 0 ? `${unread} <span style="background: var(--ethio-red); color: white; border-radius: 50%; padding: 2px 8px; font-size: 12px; margin-left: 5px;">New</span>` : '0';
+
+            container.innerHTML = `
+                <!-- Welcome Banner -->
+                <div class="welcome-banner">
+                    <h1>Welcome, ${name}! ⚙️</h1>
+                    <p>Administrator Dashboard | Debre Markos Secondary School</p>
+                    <div class="admin-badge">🛡️ Administrator</div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card" onclick="window.location.href='/manage-students'">
+                        <div class="stat-icon green"><i class="fas fa-user-graduate"></i></div>
+                        <div class="stat-info">
+                            <h3>Students</h3>
+                            <div class="value">${stats.students}</div>
+                        </div>
+                    </div>
+                    <div class="stat-card" onclick="window.location.href='/manage-teachers'">
+                        <div class="stat-icon blue"><i class="fas fa-chalkboard-user"></i></div>
+                        <div class="stat-info">
+                            <h3>Teachers</h3>
+                            <div class="value">${stats.teachers}</div>
+                        </div>
+                    </div>
+                    <div class="stat-card" onclick="window.location.href='/manage-parents'">
+                        <div class="stat-icon yellow"><i class="fas fa-user-friends"></i></div>
+                        <div class="stat-info">
+                            <h3>Parents</h3>
+                            <div class="value">${stats.parents}</div>
+                        </div>
+                    </div>
+                    <div class="stat-card" onclick="window.location.href='/post-assignment'">
+                        <div class="stat-icon purple"><i class="fas fa-tasks"></i></div>
+                        <div class="stat-info">
+                            <h3>Assignments</h3>
+                            <div class="value">${stats.assignments}</div>
+                        </div>
+                    </div>
+                    <div class="stat-card" onclick="window.location.href='/results'">
+                        <div class="stat-icon red"><i class="fas fa-chart-line"></i></div>
+                        <div class="stat-info">
+                            <h3>Results</h3>
+                            <div class="value">${stats.results}</div>
+                        </div>
+                    </div>
+                    <div class="stat-card" onclick="window.location.href='/messages'">
+                        <div class="stat-icon pink"><i class="fas fa-envelope"></i></div>
+                        <div class="stat-info">
+                            <h3>Messages</h3>
+                            <div class="value" style="font-size: 18px;">${unreadDisplay}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    <span>Quick Actions</span>
+                </div>
+                <div class="actions-grid">
+                    <div class="action-btn" onclick="window.location.href='/manage-students'">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>Students</span>
+                    </div>
+                    <div class="action-btn" onclick="window.location.href='/manage-teachers'">
+                        <i class="fas fa-chalkboard-user"></i>
+                        <span>Teachers</span>
+                    </div>
+                    <div class="action-btn" onclick="window.location.href='/manage-parents'">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Parents</span>
+                    </div>
+                    <div class="action-btn" onclick="window.location.href='/post-news'">
+                        <i class="fas fa-newspaper"></i>
+                        <span>Post News</span>
+                    </div>
+                    <div class="action-btn" onclick="window.location.href='/post-assignment'">
+                        <i class="fas fa-pen-fancy"></i>
+                        <span>Assignments</span>
+                    </div>
+                    <div class="action-btn" onclick="window.location.href='/post-result'">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Results</span>
+                    </div>
+                    <div class="action-btn" onclick="window.location.href='/admin-report'">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Reports</span>
+                    </div>
+                    <div class="action-btn" onclick="window.location.href='/messages'">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messages ${unread > 0 ? `<span style="background: var(--ethio-red); color: white; border-radius: 50%; padding: 1px 7px; font-size: 10px; margin-left: 4px;">${unread}</span>` : ''}</span>
+                    </div>
+                </div>
+
+                <!-- Two Columns -->
+                <div class="two-columns">
+                    <!-- Recent Activity -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                            <a href="#" onclick="return false;">View All →</a>
+                        </div>
+                        ${adminData.recentActivity.map(activity => `
+                            <div class="activity-item">
+                                <div class="activity-icon"><i class="fas ${activity.icon}"></i></div>
+                                <div class="activity-detail">
+                                    <p>${activity.text}</p>
+                                    <small>${activity.time}</small>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- Announcements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bullhorn"></i> Announcements</h3>
+                            <a href="/news">More →</a>
+                        </div>
+                        ${adminData.announcements.map(ann => `
+                            <div class="announcement-item">
+                                <h4>${ann.title}</h4>
+                                <p>${ann.date}</p>
+                                <div class="date">${ann.date}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- System Status -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-server"></i> System Status</h3>
+                        <a href="#" onclick="return false;">Refresh →</a>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background: #dcfce7; color: #22c55e;"><i class="fas fa-check-circle"></i></div>
+                        <div class="activity-detail">
+                            <p>Database: Online</p>
+                            <small>All systems operational</small>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background: #dcfce7; color: #22c55e;"><i class="fas fa-check-circle"></i></div>
+                        <div class="activity-detail">
+                            <p>Storage: ${(JSON.stringify(localStorage).length / 1024).toFixed(1)} KB used</p>
+                            <small>Local storage active</small>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background: #fef3c7; color: #f59e0b;"><i class="fas fa-clock"></i></div>
+                        <div class="activity-detail">
+                            <p>Last Backup: ${localStorage.getItem('last_backup') ? new Date(localStorage.getItem('last_backup')).toLocaleDateString() : 'Never'}</p>
+                            <small>Backup recommended</small>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============================================
+        // Auto-refresh badge every 10 seconds
+        // ============================================
+
+        renderAdminHome();
+        updateBadge();
+
+        setInterval(() => {
+            updateBadge();
+        }, 10000);
+
+        // ============================================
+        // Load stats from API (if available)
+        // ============================================
+
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                if (data) {
+                    adminData.stats = data;
+                    renderAdminHome();
+                }
+            } catch (e) {
+                // Use localStorage data if API not available
+                const users = JSON.parse(localStorage.getItem('school_users')) || [];
+                adminData.stats.students = users.filter(u => u.role === 'student').length;
+                adminData.stats.teachers = users.filter(u => u.role === 'teacher').length;
+                adminData.stats.parents = users.filter(u => u.role === 'parent').length;
+                adminData.stats.admins = users.filter(u => u.role === 'admin').length;
+                const assignments = JSON.parse(localStorage.getItem('teacher_assignments')) || [];
+                adminData.stats.assignments = assignments.length;
+                const results = JSON.parse(localStorage.getItem('exam_results_data')) || [];
+                adminData.stats.results = results.length;
+                renderAdminHome();
+            }
+        }
+
+        loadStats();
+    </script>
+</body>
+</html>

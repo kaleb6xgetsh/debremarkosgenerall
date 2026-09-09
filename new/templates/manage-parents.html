@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Manage Parents - Admin Panel | Debre Markos Secondary School</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #047857;
+            --ethio-green: #078930;
+            --ethio-yellow: #FCDD09;
+            --ethio-red: #DA121A;
+            --text-dark: #1f2937;
+            --text-soft: #4b5563;
+            --bg-light: #f9fafb;
+            --shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: #f0f4f8;
+        }
+
+        .ethiopian-flag {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            height: 5px;
+            z-index: 1001;
+        }
+        .ethiopian-flag .green { flex: 1; background: var(--ethio-green); }
+        .ethiopian-flag .yellow { flex: 1; background: var(--ethio-yellow); }
+        .ethiopian-flag .red { flex: 1; background: var(--ethio-red); }
+
+        nav {
+            width: 100%;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #e5e7eb;
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 5px;
+            left: 0;
+            z-index: 999;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary-green);
+        }
+        .nav-logo i {
+            margin-right: 8px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+        .nav-links a.active {
+            background: var(--primary-green);
+            color: white;
+        }
+        .nav-links a.logout {
+            background: var(--ethio-red);
+            color: white;
+        }
+        .nav-links a.logout:hover {
+            background: #b91c1c;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        .main-content {
+            padding-top: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 40px;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .page-header p {
+            color: var(--text-soft);
+            font-size: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-primary {
+            background: var(--ethio-red);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: var(--primary-green);
+            transform: translateY(-2px);
+        }
+        .btn-success {
+            background: var(--primary-green);
+            color: white;
+        }
+        .btn-success:hover {
+            background: #065f46;
+        }
+        .btn-danger {
+            background: var(--ethio-red);
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+        .btn-secondary {
+            background: #e5e7eb;
+            color: var(--text-dark);
+        }
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+        .btn-sm {
+            padding: 5px 14px;
+            font-size: 12px;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 14px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+        .stat-card .number {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary-green);
+        }
+        .stat-card .label {
+            font-size: 11px;
+            color: var(--text-soft);
+        }
+
+        .search-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-soft);
+        }
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border-radius: 30px;
+            border: 1px solid #e5e7eb;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        .parents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .parent-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+        }
+        .parent-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .parent-header {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            padding: 18px;
+            text-align: center;
+            color: white;
+        }
+        .parent-avatar {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-size: 28px;
+            color: #d97706;
+        }
+        .parent-name {
+            font-size: 17px;
+            font-weight: 700;
+        }
+        .parent-child {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        .parent-body {
+            padding: 15px 18px;
+        }
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 13px;
+        }
+        .info-row i {
+            width: 20px;
+            color: #d97706;
+        }
+        .parent-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 12px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 28px;
+            max-width: 550px;
+            width: 90%;
+            padding: 30px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .modal-content h3 {
+            color: #d97706;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-dark);
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #d97706;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            border: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-soft);
+            grid-column: 1 / -1;
+        }
+        .empty-state i {
+            font-size: 48px;
+            opacity: 0.4;
+            margin-bottom: 10px;
+        }
+
+        .alert {
+            padding: 12px 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: none;
+            font-size: 14px;
+        }
+        .alert-success {
+            background: #dcfce7;
+            color: #166534;
+            border-left: 4px solid #22c55e;
+        }
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 10px 16px; }
+            .nav-links { display: none; flex-direction: column; width: 100%; padding-top: 10px; }
+            .nav-links.show { display: flex; }
+            .nav-links a { width: 100%; text-align: center; padding: 8px; }
+            .menu-toggle { display: block; }
+            .main-content { padding-top: 70px; }
+            .parents-grid { grid-template-columns: 1fr; }
+            .search-section { flex-direction: column; align-items: stretch; }
+            .form-row { grid-template-columns: 1fr; }
+            .page-header { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ethiopian-flag">
+        <div class="green"></div>
+        <div class="yellow"></div>
+        <div class="red"></div>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo"><i class="fas fa-school"></i> DMSS</div>
+            <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            <div class="nav-links" id="navLinks">
+                <a href="/adminhome">← Back</a>
+                <a href="/admin-report">Reports</a>
+                <a href="/post-news">News</a>
+                <a href="/manage-teachers">Teachers</a>
+                <a href="/manage-students">Students</a>
+                <a href="/manage-parents" class="active">Parents</a>
+                <a href="/profile">Profile</a>
+                <a href="/logout" class="logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="page-header">
+            <div>
+                <h1>👪 Manage Parents</h1>
+                <p>Add, edit, and remove parent accounts</p>
+            </div>
+            <button class="btn btn-primary" onclick="openAddModal()"><i class="fas fa-user-plus"></i> Add Parent</button>
+        </div>
+
+        <div id="alertMessage" class="alert"></div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-card"><div class="number" id="totalParents">0</div><div class="label">Total</div></div>
+            <div class="stat-card"><div class="number" id="activeParents">0</div><div class="label">Active</div></div>
+            <div class="stat-card"><div class="number" id="linkedChildren">0</div><div class="label">Children Linked</div></div>
+        </div>
+
+        <!-- Search -->
+        <div class="search-section">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by name or email...">
+            </div>
+        </div>
+
+        <!-- Parents Grid -->
+        <div class="parents-grid" id="parentsContainer"></div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div id="parentModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle"><i class="fas fa-user-plus"></i> Add Parent</h3>
+            <form id="parentForm">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="parentName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" id="parentEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="parentPhone" placeholder="+251-XXX-XXXX">
+                </div>
+                <div class="form-group">
+                    <label>Child's Name (Optional)</label>
+                    <input type="text" id="parentChildName" placeholder="Enter child's name">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Child's Grade</label>
+                        <select id="parentChildGrade">
+                            <option value="">Select</option>
+                            <option value="Grade 8">Grade 8</option>
+                            <option value="Grade 9">Grade 9</option>
+                            <option value="Grade 10">Grade 10</option>
+                            <option value="Grade 11">Grade 11</option>
+                            <option value="Grade 12">Grade 12</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Child's Section</label>
+                        <select id="parentChildSection">
+                            <option value="">Select</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Password *</label>
+                    <input type="password" id="parentPassword" placeholder="Min 6 characters" required minlength="6">
+                </div>
+                <div id="editParentId" style="display:none;"></div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-success">Save Parent</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // Toggle Mobile Menu
+        // ============================================
+
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('show');
+        }
+
+        // ============================================
+        // Get Current User
+        // ============================================
+
+        const currentUser = JSON.parse(sessionStorage.getItem('current_user')) || JSON.parse(localStorage.getItem('current_user'));
+
+        if (!currentUser || currentUser.role !== 'admin') {
+            window.location.href = '/login';
+        }
+
+        // ============================================
+        // Get Parents
+        // ============================================
+
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('school_users')) || [];
+        }
+
+        function getParents() {
+            return getUsers().filter(u => u.role === 'parent');
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('school_users', JSON.stringify(users));
+        }
+
+        let editingParentId = null;
+
+        // ============================================
+        // Render Parents
+        // ============================================
+
+        function renderParents() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            let parents = getParents();
+
+            if (searchTerm) {
+                parents = parents.filter(p => 
+                    p.name.toLowerCase().includes(searchTerm) ||
+                    p.email.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            // Update stats
+            const allParents = getParents();
+            document.getElementById('totalParents').innerHTML = allParents.length;
+            document.getElementById('activeParents').innerHTML = allParents.filter(p => p.status !== 'inactive').length;
+            document.getElementById('linkedChildren').innerHTML = allParents.filter(p => p.child_name).length;
+
+            const container = document.getElementById('parentsContainer');
+            if (parents.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-user-friends"></i>
+                        <p>${searchTerm ? 'No parents found.' : 'No parents registered yet.'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = parents.map(p => `
+                <div class="parent-card">
+                    <div class="parent-header">
+                        <div class="parent-avatar"><i class="fas fa-user-friends"></i></div>
+                        <div class="parent-name">${p.name}</div>
+                        <div class="parent-child">${p.child_name ? '👶 ' + p.child_name : 'No child linked'}</div>
+                    </div>
+                    <div class="parent-body">
+                        <div class="info-row"><i class="fas fa-envelope"></i><span>${p.email}</span></div>
+                        <div class="info-row"><i class="fas fa-phone"></i><span>${p.phone || 'N/A'}</span></div>
+                        ${p.child_name ? `
+                            <div class="info-row"><i class="fas fa-graduation-cap"></i><span>${p.child_grade || 'N/A'} - ${p.child_section || 'N/A'}</span></div>
+                        ` : ''}
+                        <div class="parent-actions">
+                            <button class="btn btn-secondary btn-sm" onclick="editParent(${p.id})"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteParent(${p.id})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================
+        // Open Add Modal
+        // ============================================
+
+        function openAddModal() {
+            editingParentId = null;
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-user-plus"></i> Add Parent';
+            document.getElementById('parentForm').reset();
+            document.getElementById('parentPassword').required = true;
+            document.getElementById('parentModal').style.display = 'flex';
+        }
+
+        // ============================================
+        // Edit Parent
+        // ============================================
+
+        function editParent(id) {
+            const parent = getUsers().find(u => u.id === id);
+            if (!parent) return;
+
+            editingParentId = id;
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Parent';
+            document.getElementById('parentName').value = parent.name;
+            document.getElementById('parentEmail').value = parent.email;
+            document.getElementById('parentPhone').value = parent.phone || '';
+            document.getElementById('parentChildName').value = parent.child_name || '';
+            document.getElementById('parentChildGrade').value = parent.child_grade || '';
+            document.getElementById('parentChildSection').value = parent.child_section || '';
+            document.getElementById('parentPassword').required = false;
+            document.getElementById('parentPassword').placeholder = 'Leave blank to keep current';
+            document.getElementById('parentModal').style.display = 'flex';
+        }
+
+        // ============================================
+        // Close Modal
+        // ============================================
+
+        function closeModal() {
+            document.getElementById('parentModal').style.display = 'none';
+            document.getElementById('parentForm').reset();
+            editingParentId = null;
+        }
+
+        // ============================================
+        // Handle Form Submit
+        // ============================================
+
+        document.getElementById('parentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('parentName').value.trim();
+            const email = document.getElementById('parentEmail').value.trim();
+            const phone = document.getElementById('parentPhone').value.trim();
+            const childName = document.getElementById('parentChildName').value.trim();
+            const childGrade = document.getElementById('parentChildGrade').value;
+            const childSection = document.getElementById('parentChildSection').value;
+            const password = document.getElementById('parentPassword').value;
+            const alertDiv = document.getElementById('alertMessage');
+
+            if (!name || !email) {
+                alertDiv.innerHTML = '❌ Name and email are required.';
+                alertDiv.className = 'alert alert-error';
+                alertDiv.style.display = 'block';
+                setTimeout(() => alertDiv.style.display = 'none', 3000);
+                return;
+            }
+
+            let users = getUsers();
+
+            if (editingParentId) {
+                const index = users.findIndex(u => u.id === editingParentId);
+                if (index !== -1) {
+                    users[index].name = name;
+                    users[index].email = email;
+                    users[index].phone = phone;
+                    users[index].child_name = childName;
+                    users[index].child_grade = childGrade;
+                    users[index].child_section = childSection;
+                    if (password) users[index].password = password;
+                    saveUsers(users);
+                    
+                    const profile = JSON.parse(localStorage.getItem(`user_profile_${email}`)) || {};
+                    profile.name = name;
+                    profile.email = email;
+                    profile.phone = phone;
+                    profile.child_name = childName;
+                    profile.child_grade = childGrade;
+                    profile.child_section = childSection;
+                    if (password) profile.password = password;
+                    localStorage.setItem(`user_profile_${email}`, JSON.stringify(profile));
+
+                    alertDiv.innerHTML = '✅ Parent updated successfully!';
+                }
+            } else {
+                if (users.find(u => u.email === email)) {
+                    alertDiv.innerHTML = '❌ Email already registered.';
+                    alertDiv.className = 'alert alert-error';
+                    alertDiv.style.display = 'block';
+                    setTimeout(() => alertDiv.style.display = 'none', 3000);
+                    return;
+                }
+                if (!password) {
+                    alertDiv.innerHTML = '❌ Password is required.';
+                    alertDiv.className = 'alert alert-error';
+                    alertDiv.style.display = 'block';
+                    setTimeout(() => alertDiv.style.display = 'none', 3000);
+                    return;
+                }
+
+                const newParent = {
+                    id: Date.now(),
+                    name: name,
+                    email: email,
+                    password: password,
+                    role: 'parent',
+                    phone: phone,
+                    child_name: childName,
+                    child_grade: childGrade,
+                    child_section: childSection,
+                    status: 'active',
+                    created_at: new Date().toISOString()
+                };
+                users.push(newParent);
+                saveUsers(users);
+                localStorage.setItem(`user_profile_${email}`, JSON.stringify(newParent));
+
+                alertDiv.innerHTML = '✅ Parent added successfully!';
+            }
+
+            alertDiv.className = 'alert alert-success';
+            alertDiv.style.display = 'block';
+            setTimeout(() => alertDiv.style.display = 'none', 3000);
+
+            closeModal();
+            renderParents();
+        });
+
+        // ============================================
+        // Delete Parent
+        // ============================================
+
+        function deleteParent(id) {
+            if (confirm('Delete this parent? This cannot be undone.')) {
+                let users = getUsers();
+                users = users.filter(u => u.id !== id);
+                saveUsers(users);
+                renderParents();
+                const alertDiv = document.getElementById('alertMessage');
+                alertDiv.innerHTML = '✅ Parent deleted successfully.';
+                alertDiv.className = 'alert alert-success';
+                alertDiv.style.display = 'block';
+                setTimeout(() => alertDiv.style.display = 'none', 3000);
+            }
+        }
+
+        // ============================================
+        // Search Input
+        // ============================================
+
+        document.getElementById('searchInput').addEventListener('input', renderParents);
+
+        // ============================================
+        // Close Modal on Outside Click
+        // ============================================
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('parentModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // ============================================
+        // Initial Render
+        // ============================================
+
+        renderParents();
+    </script>
+</body>
+</html>

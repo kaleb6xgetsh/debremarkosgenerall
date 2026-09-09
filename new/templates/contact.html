@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Contact Us - Debre Markos Secondary Preparatory
+         School</title>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            --ethio-green: #078930;
+            --ethio-yellow: #FCDD09;
+            --ethio-red: #DA121A;
+            --shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--gray-200), var(--gray-300));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Ethiopian Flag Banner */
+        .ethiopian-flag {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            height: 5px;
+            z-index: 1000;
+        }
+
+        .ethiopian-flag .green { flex: 1; background: var(--ethio-green); }
+        .ethiopian-flag .yellow { flex: 1; background: var(--ethio-yellow); }
+        .ethiopian-flag .red { flex: 1; background: var(--ethio-red); }
+
+        /* Back Button */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+
+        .back-button a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background: var(--gray-800);
+            border: 2px solid var(--gray-600);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+        }
+
+        .back-button a:hover {
+            background: var(--gray-900);
+            transform: translateX(-10px) scale(1.05);
+            border-color: var(--gray-400);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .back-button i {
+            font-size: 18px;
+        }
+
+        /* Main Container */
+        .contact-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 80px auto 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Contact Info Card */
+        .info-card {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray-300);
+            animation: slideInLeft 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, var(--ethio-green), var(--ethio-yellow), var(--ethio-red));
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .info-header {
+            margin-bottom: 40px;
+        }
+
+        .info-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 15px;
+        }
+
+        .info-header p {
+            color: var(--gray-600);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .info-detail {
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: var(--gray-100);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-200);
+        }
+
+        .info-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--gray-400);
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--gray-800);
+            border: 2px solid var(--gray-300);
+        }
+
+        .info-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 5px;
+        }
+
+        .info-content a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            display: inline-block;
+        }
+
+        .info-content a:hover {
+            color: var(--ethio-red);
+        }
+
+        /* Social Links */
+        .social-section {
+            margin-top: 40px;
+        }
+
+        .social-section h3 {
+            font-size: 20px;
+            color: var(--gray-800);
+            margin-bottom: 20px;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .social-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: var(--gray-100);
+            border-radius: 15px;
+            text-decoration: none;
+            color: var(--gray-700);
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-200);
+        }
+
+        .social-btn i {
+            font-size: 24px;
+        }
+
+        .social-btn span {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-5px);
+            background: var(--gray-800);
+            color: white;
+            border-color: var(--gray-600);
+        }
+
+        /* Form Card */
+        .form-card {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray-300);
+            animation: slideInRight 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, var(--ethio-green), var(--ethio-yellow), var(--ethio-red));
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .form-header {
+            margin-bottom: 40px;
+        }
+
+        .form-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 15px;
+        }
+
+        .form-header p {
+            color: var(--gray-600);
+            font-size: 16px;
+        }
+
+        /* Form Styles */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid var(--gray-300);
+            border-radius: 15px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            background: var(--gray-100);
+            outline: none;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--gray-700);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(73, 80, 87, 0.1);
+        }
+
+        .form-group label {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-500);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            background: var(--gray-100);
+            padding: 0 5px;
+        }
+
+        .form-group textarea ~ label {
+            top: 30px;
+            transform: none;
+        }
+
+        .form-group input:focus ~ label,
+        .form-group textarea:focus ~ label,
+        .form-group input:not(:placeholder-shown) ~ label,
+        .form-group textarea:not(:placeholder-shown) ~ label {
+            top: 0;
+            font-size: 12px;
+            color: var(--gray-700);
+            background: white;
+        }
+
+        /* Phone Number Specific Styles */
+        .phone-hint {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+            color: var(--gray-500);
+            transition: color 0.3s ease;
+        }
+
+        .phone-hint i {
+            margin-right: 5px;
+        }
+
+        .phone-error {
+            display: none;
+            color: var(--ethio-red);
+            font-size: 12px;
+            margin-top: 8px;
+            padding: 10px;
+            background: rgba(218, 18, 26, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid var(--ethio-red);
+            animation: shake 0.3s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .phone-error i {
+            margin-right: 5px;
+        }
+
+        .phone-success {
+            display: none;
+            color: var(--ethio-green);
+            font-size: 12px;
+            margin-top: 8px;
+            padding: 10px;
+            background: rgba(7, 137, 48, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid var(--ethio-green);
+        }
+
+        .phone-success i {
+            margin-right: 5px;
+        }
+
+        /* Form Validation Styles */
+        .form-group input:invalid:not(:placeholder-shown),
+        .form-group textarea:invalid:not(:placeholder-shown) {
+            border-color: var(--ethio-red);
+        }
+
+        .form-group input:valid:not(:placeholder-shown),
+        .form-group textarea:valid:not(:placeholder-shown) {
+            border-color: var(--ethio-green);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--gray-800);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .submit-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .submit-btn:hover {
+            background: var(--gray-900);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .submit-btn i {
+            font-size: 20px;
+        }
+
+        /* Loading Spinner */
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .loading i {
+            font-size: 30px;
+            color: var(--gray-600);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: var(--ethio-green);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Footer */
+        .footer-note {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 60px;
+            color: var(--gray-600);
+            font-size: 14px;
+            border: 1px solid var(--gray-300);
+        }
+
+        .footer-note i {
+            color: var(--ethio-red);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .info-card, .form-card {
+                animation: fadeInUp 0.8s ease;
+            }
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                margin: 100px auto 40px;
+            }
+
+            .info-header h2,
+            .form-header h2 {
+                font-size: 28px;
+            }
+
+            .info-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .social-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .back-button {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .info-card, .form-card {
+                padding: 25px;
+            }
+
+            .info-header h2,
+            .form-header h2 {
+                font-size: 24px;
+            }
+
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-note {
+                font-size: 12px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Ethiopian Flag Banner -->
+    <div class="ethiopian-flag">
+        <div class="green"></div>
+        <div class="yellow"></div>
+        <div class="red"></div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="back-button">
+        <a href="/../htmlll/html1">
+            <i class="fas fa-arrow-left"></i>
+            <span>BACK TO HOME</span>
+        </a>
+    </div>
+
+    <!-- Main Contact Container -->
+    <div class="contact-container">
+        <!-- Contact Information Card -->
+        <div class="info-card">
+            <div class="info-header">
+                <h2>CONTACT US</h2>
+                <p>We'd love to hear from you! Choose your preferred way to reach us.</p>
+            </div>
+
+            <div class="info-detail">
+                <!-- Email Contact -->
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Email Us Directly</h3>
+                        <a href="mailto:firezeryirga@gmail.com?subject=Contact%20from%20School%20Website">
+                            <i class="fas fa-envelope-open-text"></i> firezeryirga@gmail.com
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Phone Contact -->
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Call Us Directly</h3>
+                        <a href="tel:+251960392232">
+                            <i class="fas fa-phone"></i> +251 912345678
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Telegram Contact -->
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fab fa-telegram-plane"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Telegram</h3>
+                        <a href="https://t.me/DMhighschoo" target="_blank">
+                            <i class="fab fa-telegram"></i> t.me/DMhighschool
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Links -->
+            <div class="social-section">
+                <h3>FOLLOW US</h3>
+                <div class="social-grid">
+                    <a href="#" class="social-btn">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Facebook</span>
+                    </a>
+                    <a href="#" class="social-btn">
+                        <i class="fab fa-telegram-plane"></i>
+                        <span>Telegram</span>
+                    </a>
+                    <a href="#" class="social-btn">
+                        <i class="fab fa-youtube"></i>
+                        <span>YouTube</span>
+                    </a>
+                    <a href="#" class="social-btn">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Form Card -->
+        <div class="form-card">
+            <div class="form-header">
+                <h2>SEND MESSAGE</h2>
+                <p>Fill out the form below and we'll get back to you soon.</p>
+            </div>
+
+            <!-- Contact Form -->
+            <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                <!-- Web3Forms Access Key -->
+                <input type="hidden" name="access_key" value="8e13cb75-c603-48c1-89a3-e491f59e1fc9">
+                
+                <!-- Email Subject -->
+                <input type="hidden" name="subject" value="New Contact Form Submission from School Website">
+                
+                <!-- Reply To -->
+                <input type="hidden" name="reply_to" value="firezeryirga@gmail.com">
+                
+                <!-- Form Fields -->
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder=" " required>
+                    <label for="name"><i class="fas fa-user"></i> Your Full Name</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder=" " required>
+                    <label for="email"><i class="fas fa-envelope"></i> Your Email</label>
+                </div>
+
+                <!-- PHONE NUMBER FIELD - FIXED WITH FULL VALIDATION -->
+                <div class="form-group">
+                    <input type="tel" 
+                           id="phone" 
+                           name="phone" 
+                           placeholder=" " 
+                           required
+                           pattern="^(\+251|0)[1-9][0-9]{8}$"
+                           title="Please enter a valid Ethiopian phone number (e.g., 0912345678 or +251912345678)"
+                           maxlength="13"
+                           oninput="validatePhoneNumber(this)">
+                    <label for="phone"><i class="fas fa-phone"></i> Your Phone Number</label>
+                    
+                    <!-- Format Hint -->
+                    <small class="phone-hint" id="phoneHint">
+                        <i class="fas fa-info-circle"></i> 
+                        Format: 0912345678 or +251912345678
+                    </small>
+                    
+                    <!-- Error Message -->
+                    <div class="phone-error" id="phoneError">
+                        <i class="fas fa-exclamation-circle"></i> 
+                        Invalid phone number! Please use Ethiopian format (09... or +251...)
+                    </div>
+                    
+                    <!-- Success Message -->
+                    <div class="phone-success" id="phoneSuccess">
+                        <i class="fas fa-check-circle"></i> 
+                        Valid phone number
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <textarea id="message" name="message" placeholder=" " required></textarea>
+                    <label for="message"><i class="fas fa-comment"></i> Your Message</label>
+                </div>
+
+                <!-- Honeypot to prevent spam -->
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>SEND MESSAGE</span>
+                </button>
+
+                <!-- Loading Spinner -->
+                <div class="loading" id="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p style="margin-top: 10px;">Sending your message...</p>
+                </div>
+
+                <!-- Success Message -->
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Message sent successfully! We'll contact you soon.</p>
+                </div>
+            </form>
+        </div>
+
+        <!-- Footer Note -->
+        <div class="footer-note">
+            <p>
+                <i class="fas fa-school"></i> Debre Markos Secondary Preparatory
+                 School | 
+                <i class="fas fa-phone"></i> +251 912345678
+                <i class="fas fa-envelope"></i> firezeryirga@gmail.com
+            </p>
+            <p style="margin-top: 10px; font-size: 12px;">
+                Made with <i class="fas fa-heart"></i> by PRI Developers | © 2025 All Rights Reserved
+            </p>
+        </div>
+    </div>
+
+    <!-- JavaScript for Form Handling and Phone Validation -->
+    <script>
+        // ==================== PHONE NUMBER VALIDATION ====================
+        
+        // Get phone elements
+        const phoneInput = document.getElementById('phone');
+        const phoneHint = document.getElementById('phoneHint');
+        const phoneError = document.getElementById('phoneError');
+        const phoneSuccess = document.getElementById('phoneSuccess');
+
+        // Validate phone number function
+        function validatePhoneNumber(input) {
+            const phone = input.value.trim();
+            
+            // Ethiopian phone number patterns
+            const patterns = {
+                '09': /^09[0-9]{8}$/,           // 09XXXXXXXX (10 digits)
+                '251': /^251[1-9][0-9]{8}$/,    // 251XXXXXXXXX (12 digits)
+                'plus251': /^\+251[1-9][0-9]{8}$/ // +251XXXXXXXXX (13 digits)
+            };
+            
+            let isValid = false;
+            
+            // Check which pattern matches
+            if (phone.startsWith('09') && phone.length === 10) {
+                isValid = patterns['09'].test(phone);
+            } else if (phone.startsWith('251') && phone.length === 12) {
+                isValid = patterns['251'].test(phone);
+            } else if (phone.startsWith('+251') && phone.length === 13) {
+                isValid = patterns['plus251'].test(phone);
+            }
+            
+            // Update UI based on validation
+            if (phone.length === 0) {
+                // Empty field
+                input.style.borderColor = 'var(--gray-300)';
+                phoneError.style.display = 'none';
+                phoneSuccess.style.display = 'none';
+                phoneHint.style.color = 'var(--gray-500)';
+            } else if (isValid) {
+                // Valid phone number
+                input.style.borderColor = 'var(--ethio-green)';
+                phoneError.style.display = 'none';
+                phoneSuccess.style.display = 'block';
+                phoneHint.style.color = 'var(--ethio-green)';
+            } else {
+                // Invalid phone number
+                input.style.borderColor = 'var(--ethio-red)';
+                phoneError.style.display = 'block';
+                phoneSuccess.style.display = 'none';
+                phoneHint.style.color = 'var(--ethio-red)';
+            }
+            
+            return isValid;
+        }
+
+        // Auto-format phone number as user types
+        phoneInput.addEventListener('input', function(e) {
+            let phone = this.value.replace(/[^\d+]/g, ''); // Remove non-digits except +
+            
+            // Limit length based on format
+            if (phone.startsWith('+251')) {
+                phone = phone.slice(0, 13); // +251 + 9 digits
+            } else if (phone.startsWith('251')) {
+                phone = phone.slice(0, 12); // 251 + 9 digits
+            } else if (phone.startsWith('0')) {
+                phone = phone.slice(0, 10); // 0 + 9 digits
+            } else if (phone.startsWith('+')) {
+                phone = phone.slice(0, 13); // Other international format
+            } else {
+                // Default to Ethiopian format starting with 0
+                if (phone.length > 0 && !phone.startsWith('0') && !phone.startsWith('2')) {
+                    phone = '0' + phone;
+                }
+                phone = phone.slice(0, 10);
+            }
+            
+            this.value = phone;
+            validatePhoneNumber(this);
+        });
+
+        // Prevent non-numeric input (allow + at beginning only)
+        phoneInput.addEventListener('keydown', function(e) {
+            const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+            const isNumber = /^[0-9]$/.test(e.key);
+            
+            // Allow numbers
+            if (isNumber) {
+                return;
+            }
+            
+            // Allow + only at beginning and when field is empty
+            if (e.key === '+' && this.value.length === 0) {
+                return;
+            }
+            
+            // Allow control keys
+            if (allowedKeys.includes(e.key) || e.ctrlKey) {
+                return;
+            }
+            
+            // Prevent everything else
+            e.preventDefault();
+        });
+
+        // Format on blur (when user leaves field)
+        phoneInput.addEventListener('blur', function() {
+            let phone = this.value;
+            
+            // Auto-format to standard Ethiopian format
+            if (phone.length === 9 && phone.startsWith('9')) {
+                this.value = '0' + phone;
+            } else if (phone.length === 8) {
+                this.value = '09' + phone;
+            } else if (phone.length === 11 && phone.startsWith('251')) {
+                // Already in 251 format
+            } else if (phone.length === 12 && phone.startsWith('+251')) {
+                // Already in +251 format
+            }
+            
+            validatePhoneNumber(this);
+        });
+
+        // ==================== FORM SUBMISSION ====================
+        
+        const form = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const loading = document.getElementById('loading');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Validate phone before submission
+            if (!validatePhoneNumber(phoneInput)) {
+                alert('Please enter a valid Ethiopian phone number (09... or +251...)');
+                phoneInput.focus();
+                return;
+            }
+            
+            // Show loading
+            submitBtn.style.display = 'none';
+            loading.style.display = 'block';
+            
+            // Get form data
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                // Hide loading
+                loading.style.display = 'none';
+                
+                if (data.success) {
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    form.reset();
+                    
+                    // Reset phone validation styles
+                    phoneInput.style.borderColor = 'var(--gray-300)';
+                    phoneError.style.display = 'none';
+                    phoneSuccess.style.display = 'none';
+                    phoneHint.style.color = 'var(--gray-500)';
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                        submitBtn.style.display = 'flex';
+                    }, 5000);
+                } else {
+                    alert('Something went wrong. Please try again or email us directly.');
+                    submitBtn.style.display = 'flex';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                loading.style.display = 'none';
+                
+                // Fallback to direct email
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const message = document.getElementById('message').value;
+                
+                const mailtoLink = `mailto:firezeryirga@gmail.com?subject=Contact%20from%20${encodeURIComponent(name)}&body=Name: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0APhone: ${encodeURIComponent(phone)}%0AMessage: ${encodeURIComponent(message)}`;
+                
+                if (confirm('Form submission failed. Would you like to send an email directly?')) {
+                    window.location.href = mailtoLink;
+                }
+                
+                submitBtn.style.display = 'flex';
+            }
+        });
+
+        // Auto-resize textarea
+        document.getElementById('message').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+
+        // Email validation hint
+        document.getElementById('email').addEventListener('input', function() {
+            const email = this.value;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email.length > 0) {
+                if (emailPattern.test(email)) {
+                    this.style.borderColor = 'var(--ethio-green)';
+                } else {
+                    this.style.borderColor = 'var(--ethio-red)';
+                }
+            } else {
+                this.style.borderColor = 'var(--gray-300)';
+            }
+        });
+
+        // Name validation (no numbers)
+        document.getElementById('name').addEventListener('input', function() {
+            const name = this.value;
+            const namePattern = /^[A-Za-z\s]+$/;
+            
+            if (name.length > 0) {
+                if (namePattern.test(name)) {
+                    this.style.borderColor = 'var(--ethio-green)';
+                } else {
+                    this.style.borderColor = 'var(--ethio-red)';
+                }
+            } else {
+                this.style.borderColor = 'var(--gray-300)';
+            }
+        });
+    </script>
+</body>
+</html>

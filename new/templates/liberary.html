@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ዲጂታል ቤተ-መጻሕፍት | Complete Digital Library - Grades 9-12</title>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --grade9-green: #4CAF50;
+            --grade9-dark-green: #2E7D32;
+            --grade9-light-green: #A5D6A7;
+            
+            --grade10-yellow: #FFC107;
+            --grade10-dark-yellow: #FF8F00;
+            --grade10-light-yellow: #FFECB3;
+            
+            --grade11-red: #F44336;
+            --grade11-dark-red: #C62828;
+            --grade11-light-red: #FFCDD2;
+            
+            --grade12-blue: #2196F3;
+            --grade12-dark-blue: #1565C0;
+            --grade12-light-blue: #BBDEFB;
+            
+            --accent-gold: #FFD700;
+            --primary-blue: #1e3c72;
+            --secondary-blue: #2a5298;
+            --cream: #FFF8DC;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
+            opacity: 0.1;
+            z-index: -1;
+            animation: zoomBackground 20s ease-in-out infinite;
+        }
+
+        @keyframes zoomBackground {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Floating Books Animation */
+        .floating-books {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-book {
+            position: absolute;
+            font-size: 30px;
+            color: rgba(255, 255, 255, 0.1);
+            animation: floatBook 15s linear infinite;
+        }
+
+        @keyframes floatBook {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Back Button */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+
+        .back-button a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border: 2px solid var(--accent-gold);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .back-button a:hover {
+            transform: translateX(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, var(--accent-gold), #FFA500);
+            color: var(--primary-blue);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 100px auto 50px;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header Section */
+        .library-header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: var(--accent-gold);
+            border: 4px solid var(--accent-gold);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        .main-title {
+            font-size: 48px;
+            font-weight: 900;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FF6347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .sub-title {
+            font-size: 24px;
+            color: var(--cream);
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .school-name {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
+            border-radius: 60px;
+            padding: 40px;
+            margin: 40px 0;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .quote-text {
+            font-size: 28px;
+            font-style: italic;
+            color: white;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            line-height: 1.6;
+        }
+
+        .quote-author {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 20px;
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        /* Grade Navigation */
+        .grade-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+
+        .grade-nav-btn {
+            padding: 20px 40px;
+            border: none;
+            border-radius: 60px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+
+        .grade-nav-btn[data-grade="9"] {
+            background: linear-gradient(135deg, var(--grade9-green), var(--grade9-dark-green));
+            border: 2px solid var(--accent-gold);
+        }
+
+        .grade-nav-btn[data-grade="10"] {
+            background: linear-gradient(135deg, var(--grade10-yellow), var(--grade10-dark-yellow));
+            border: 2px solid var(--accent-gold);
+            color: #333;
+        }
+
+        .grade-nav-btn[data-grade="11"] {
+            background: linear-gradient(135deg, var(--grade11-red), var(--grade11-dark-red));
+            border: 2px solid var(--accent-gold);
+        }
+
+        .grade-nav-btn[data-grade="12"] {
+            background: linear-gradient(135deg, var(--grade12-blue), var(--grade12-dark-blue));
+            border: 2px solid var(--accent-gold);
+        }
+
+        .grade-nav-btn:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .grade-nav-btn.active {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px var(--accent-gold);
+        }
+
+        .grade-nav-btn::before {
+            content: '📚';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            font-size: 80px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+            transition: all 0.5s ease;
+        }
+
+        .grade-nav-btn:hover::before {
+            transform: rotate(25deg) scale(1.2);
+        }
+
+        /* Grade Sections */
+        .grade-section {
+            margin: 60px 0;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            border: 2px solid var(--accent-gold);
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .grade-title {
+            font-size: 42px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 60px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grade-title.grade9 {
+            background: linear-gradient(135deg, var(--grade9-green), var(--grade9-dark-green));
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.5);
+        }
+
+        .grade-title.grade10 {
+            background: linear-gradient(135deg, var(--grade10-yellow), var(--grade10-dark-yellow));
+            box-shadow: 0 10px 30px rgba(255, 193, 7, 0.5);
+            color: #333;
+        }
+
+        .grade-title.grade11 {
+            background: linear-gradient(135deg, var(--grade11-red), var(--grade11-dark-red));
+            box-shadow: 0 10px 30px rgba(244, 67, 54, 0.5);
+        }
+
+        .grade-title.grade12 {
+            background: linear-gradient(135deg, var(--grade12-blue), var(--grade12-dark-blue));
+            box-shadow: 0 10px 30px rgba(33, 150, 243, 0.5);
+        }
+
+        .grade-title i {
+            margin-right: 15px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Books Grid */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        /* Book Card - Base Styles */
+        .book-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
+            animation: cardFloat 6s ease-in-out infinite;
+        }
+
+        .book-card:nth-child(odd) {
+            animation-delay: 0s;
+        }
+
+        .book-card:nth-child(even) {
+            animation-delay: 3s;
+        }
+
+        @keyframes cardFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .book-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Grade-specific card borders */
+        .book-card.grade9 {
+            border: 2px solid var(--grade9-green);
+        }
+        .book-card.grade9:hover {
+            border-color: var(--grade9-light-green);
+            box-shadow: 0 30px 60px rgba(76, 175, 80, 0.4);
+        }
+
+        .book-card.grade10 {
+            border: 2px solid var(--grade10-yellow);
+        }
+        .book-card.grade10:hover {
+            border-color: var(--grade10-light-yellow);
+            box-shadow: 0 30px 60px rgba(255, 193, 7, 0.4);
+        }
+
+        .book-card.grade11 {
+            border: 2px solid var(--grade11-red);
+        }
+        .book-card.grade11:hover {
+            border-color: var(--grade11-light-red);
+            box-shadow: 0 30px 60px rgba(244, 67, 54, 0.4);
+        }
+
+        .book-card.grade12 {
+            border: 2px solid var(--grade12-blue);
+        }
+        .book-card.grade12:hover {
+            border-color: var(--grade12-light-blue);
+            box-shadow: 0 30px 60px rgba(33, 150, 243, 0.4);
+        }
+
+        /* Book Cover - Grade-specific gradients */
+        .book-cover {
+            height: 150px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .book-card.grade9 .book-cover {
+            background: linear-gradient(135deg, var(--grade9-green), var(--grade9-dark-green));
+        }
+
+        .book-card.grade10 .book-cover {
+            background: linear-gradient(135deg, var(--grade10-yellow), var(--grade10-dark-yellow));
+        }
+
+        .book-card.grade11 .book-cover {
+            background: linear-gradient(135deg, var(--grade11-red), var(--grade11-dark-red));
+        }
+
+        .book-card.grade12 .book-cover {
+            background: linear-gradient(135deg, var(--grade12-blue), var(--grade12-dark-blue));
+        }
+
+        .book-cover::before {
+            content: '📖';
+            position: absolute;
+            font-size: 60px;
+            color: rgba(255, 255, 255, 0.2);
+            transform: rotate(-15deg);
+            transition: all 0.5s ease;
+        }
+
+        .book-card:hover .book-cover::before {
+            transform: rotate(0deg) scale(1.2);
+            color: rgba(255, 215, 0, 0.3);
+        }
+
+        .book-subject {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-gold);
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .book-grade-badge {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            border: 1px solid var(--accent-gold);
+        }
+
+        .book-card.grade9 .book-grade-badge {
+            background: rgba(76, 175, 80, 0.3);
+        }
+
+        .book-card.grade10 .book-grade-badge {
+            background: rgba(255, 193, 7, 0.3);
+            color: #333;
+        }
+
+        .book-card.grade11 .book-grade-badge {
+            background: rgba(244, 67, 54, 0.3);
+        }
+
+        .book-card.grade12 .book-grade-badge {
+            background: rgba(33, 150, 243, 0.3);
+        }
+
+        /* Book Info */
+        .book-info {
+            padding: 20px;
+        }
+
+        .book-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .book-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .book-meta i {
+            color: var(--accent-gold);
+            width: 16px;
+        }
+
+        /* Download Button - Grade-specific */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--accent-gold);
+        }
+
+        .book-card.grade9 .download-btn {
+            background: linear-gradient(135deg, var(--grade9-green), var(--grade9-dark-green));
+        }
+
+        .book-card.grade10 .download-btn {
+            background: linear-gradient(135deg, var(--grade10-yellow), var(--grade10-dark-yellow));
+            color: #333;
+        }
+
+        .book-card.grade11 .download-btn {
+            background: linear-gradient(135deg, var(--grade11-red), var(--grade11-dark-red));
+        }
+
+        .book-card.grade12 .download-btn {
+            background: linear-gradient(135deg, var(--grade12-blue), var(--grade12-dark-blue));
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            filter: brightness(1.1);
+        }
+
+        .download-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .download-btn:hover i {
+            transform: translateY(3px);
+        }
+
+        /* Coming Soon Card */
+        .coming-soon {
+            background: linear-gradient(135deg, #f5f7fa, #e9ecef);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 250px;
+            color: #666;
+            border: 2px dashed var(--accent-gold);
+        }
+
+        .coming-soon i {
+            font-size: 40px;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+        }
+
+        .coming-soon p {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .coming-soon small {
+            color: #999;
+            font-size: 12px;
+        }
+
+        /* Library Stats */
+        .library-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 60px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            color: white;
+            border: 1px solid var(--accent-gold);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--accent-gold);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            border: 2px solid var(--accent-gold);
+            transition: all 0.4s ease;
+        }
+
+        .nav-link:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, var(--accent-gold), #FFA500);
+            color: var(--primary-blue);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            color: white;
+            padding: 40px;
+            margin-top: 60px;
+            border-radius: 60px 60px 0 0;
+            border-top: 4px solid var(--accent-gold);
+            text-align: center;
+        }
+
+        .footer-quote {
+            font-size: 20px;
+            font-style: italic;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-author {
+            font-size: 16px;
+            color: #999;
+        }
+
+        .footer-credit {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 14px;
+            color: #999;
+        }
+
+        .footer-credit i {
+            color: var(--accent-gold);
+        }
+
+        /* Grade-specific stat cards */
+        .stat-card.grade9 { border-left: 4px solid var(--grade9-green); }
+        .stat-card.grade10 { border-left: 4px solid var(--grade10-yellow); }
+        .stat-card.grade11 { border-left: 4px solid var(--grade11-red); }
+        .stat-card.grade12 { border-left: 4px solid var(--grade12-blue); }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-title {
+                font-size: 42px;
+            }
+
+            .grade-nav-btn {
+                padding: 15px 30px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 32px;
+            }
+
+            .school-name {
+                font-size: 24px;
+            }
+
+            .sub-title {
+                font-size: 18px;
+            }
+
+            .quote-text {
+                font-size: 20px;
+            }
+
+            .grade-title {
+                font-size: 32px;
+            }
+
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-link {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+
+            .grade-nav-btn {
+                padding: 12px 20px;
+                font-size: 18px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 35px;
+            }
+
+            .main-title {
+                font-size: 24px;
+            }
+
+            .grade-title {
+                font-size: 26px;
+            }
+
+            .stat-number {
+                font-size: 28px;
+            }
+
+            .grade-nav {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Books Animation -->
+    <div class="floating-books">
+        <div class="floating-book" style="left: 10%; animation-delay: 0s;">📚</div>
+        <div class="floating-book" style="left: 30%; animation-delay: 2s;">📖</div>
+        <div class="floating-book" style="left: 50%; animation-delay: 4s;">📕</div>
+        <div class="floating-book" style="left: 70%; animation-delay: 6s;">📗</div>
+        <div class="floating-book" style="left: 90%; animation-delay: 8s;">📘</div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="back-button">
+        <a href="/../htmlll/html1">
+            <i class="fas fa-arrow-left"></i>
+            <span>BACK TO HOME</span>
+        </a>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <div class="library-header">
+            <div class="header-icon">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <h1 class="main-title">
+                DIGITAL LIBRARY
+            </h1>
+            <div class="school-name">
+                DEBRE MARKOS SECONDARY PREPARATORY SCHOOL
+            </div>
+            <p class="sub-title">
+                Complete Collection - Grades 9, 10, 11 & 12
+            </p>
+        </div>
+
+        <!-- Quote Section -->
+        <div class="quote-section">
+            <div class="quote-text">
+                "Once you stop learning, you start dying."
+            </div>
+            <div class="quote-author">
+                - Albert Einstein
+            </div>
+        </div>
+
+        <!-- Quick Grade Navigation -->
+        <div class="grade-nav">
+            <button class="grade-nav-btn active" data-grade="9" onclick="scrollToGrade('grade9')">
+                <i class="fas fa-graduation-cap"></i> GRADE 9
+            </button>
+            <button class="grade-nav-btn" data-grade="10" onclick="scrollToGrade('grade10')">
+                <i class="fas fa-graduation-cap"></i> GRADE 10
+            </button>
+            <button class="grade-nav-btn" data-grade="11" onclick="scrollToGrade('grade11')">
+                <i class="fas fa-graduation-cap"></i> GRADE 11
+            </button>
+            <button class="grade-nav-btn" data-grade="12" onclick="scrollToGrade('grade12')">
+                <i class="fas fa-graduation-cap"></i> GRADE 12
+            </button>
+        </div>
+
+        <!-- GRADE 9 SECTION - GREEN -->
+        <div id="grade9" class="grade-section">
+            <h2 class="grade-title grade9">
+                <i class="fas fa-graduation-cap"></i> GRADE 9 TEXTBOOKS
+            </h2>
+            
+            <div class="books-grid">
+                <!-- Chemistry -->
+                <div class="book-card grade9">
+                    <div class="book-cover">
+                        <span class="book-subject">🧪 Science</span>
+                        <span class="book-grade-badge">Grade 9</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Chemistry Grade 9</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/g9 c.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mathematics -->
+                <div class="book-card grade9">
+                    <div class="book-cover">
+                        <span class="book-subject">📐 Math</span>
+                        <span class="book-grade-badge">Grade 9</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Mathematics Grade 9</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/g9 m.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Physics -->
+                <div class="book-card grade9">
+                    <div class="book-cover">
+                        <span class="book-subject">⚛️ Science</span>
+                        <span class="book-grade-badge">Grade 9</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Physics Grade 9</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/Physics  Grade 9 StudentTextbook Final version  (1) (2).pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- English -->
+                <div class="book-card grade9">
+                    <div class="book-cover">
+                        <span class="book-subject">📝 English</span>
+                        <span class="book-grade-badge">Grade 9</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">English Grade 9</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/15. English Grade 9 TextbookFinal_June 30.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Biology -->
+                <div class="book-card grade9">
+                    <div class="book-cover">
+                        <span class="book-subject">🧬 Biology</span>
+                        <span class="book-grade-badge">Grade 9</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Biology Grade 9</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/grade 9-biology_fetena_net_ffbb.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Citizenship -->
+                <div class="book-card grade9">
+                    <div class="book-cover">
+                        <span class="book-subject">🏛️ Civics</span>
+                        <span class="book-grade-badge">Grade 9</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Citizenship Grade 9</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/grade 9-citizenship education_fetena_net_3c2e.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Geography -->
+                <div class="book-card grade9">
+                    <div class="book-cover">
+                        <span class="book-subject">🌍 Geography</span>
+                        <span class="book-grade-badge">Grade 9</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Geography Grade 9</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/grade 9-geography_fetena_net_e7de-1.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- ICT -->
+                <div class="book-card grade9">
+                    <div class="book-cover">
+                        <span class="book-subject">💻 ICT</span>
+                        <span class="book-grade-badge">Grade 9</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">ICT Grade 9</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/grade 9-ict_fetena_net_408d.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- History -->
+                <div class="book-card grade9">
+                    <div class="book-cover">
+                        <span class="book-subject">📜 History</span>
+                        <span class="book-grade-badge">Grade 9</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">History Grade 9</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/G9-History.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- HPE -->
+                <div class="book-card grade9">
+                    <div class="book-cover">
+                        <span class="book-subject">⚽ HPE</span>
+                        <span class="book-grade-badge">Grade 9</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">HPE Grade 9</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/G9-HPE.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Economics -->
+                <div class="book-card grade9">
+                    <div class="book-cover">
+                        <span class="book-subject">📊 Economics</span>
+                        <span class="book-grade-badge">Grade 9</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Economics Grade 9</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/G9-Economics.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Amharic - Coming Soon -->
+                <div class="book-card coming-soon">
+                    <i class="fas fa-clock"></i>
+                    <p>Amharic Grade 9</p>
+                    <small>Coming Soon</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRADE 10 SECTION - YELLOW -->
+        <div id="grade10" class="grade-section">
+            <h2 class="grade-title grade10">
+                <i class="fas fa-graduation-cap"></i> GRADE 10 TEXTBOOKS
+            </h2>
+            
+            <div class="books-grid">
+                <!-- Biology -->
+                <div class="book-card grade10">
+                    <div class="book-cover">
+                        <span class="book-subject">🧬 Biology</span>
+                        <span class="book-grade-badge">Grade 10</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Biology Grade 10</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/b10.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Chemistry -->
+                <div class="book-card grade10">
+                    <div class="book-cover">
+                        <span class="book-subject">🧪 Chemistry</span>
+                        <span class="book-grade-badge">Grade 10</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Chemistry Grade 10</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/c10.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Physics -->
+                <div class="book-card grade10">
+                    <div class="book-cover">
+                        <span class="book-subject">⚛️ Physics</span>
+                        <span class="book-grade-badge">Grade 10</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Physics Grade 10</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/Grade 10 Physics Students Textbook-1.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mathematics -->
+                <div class="book-card grade10">
+                    <div class="book-cover">
+                        <span class="book-subject">📐 Mathematics</span>
+                        <span class="book-grade-badge">Grade 10</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Mathematics Grade 10</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/grade 10-mathematics_fetena_net_6731.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- English -->
+                <div class="book-card grade10">
+                    <div class="book-cover">
+                        <span class="book-subject">📝 English</span>
+                        <span class="book-grade-badge">Grade 10</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">English Grade 10</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/grade 10-english_fetena_net_57cc.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- History -->
+                <div class="book-card grade10">
+                    <div class="book-cover">
+                        <span class="book-subject">📜 History</span>
+                        <span class="book-grade-badge">Grade 10</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">History Grade 10</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/grade 10-history_fetena_net_3957.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Amharic -->
+                <div class="book-card grade10">
+                    <div class="book-cover">
+                        <span class="book-subject">📖 Amharic</span>
+                        <span class="book-grade-badge">Grade 10</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Amharic Grade 10</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/grade 10-amharic_fetena_net_1096.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Economics -->
+                <div class="book-card grade10">
+                    <div class="book-cover">
+                        <span class="book-subject">📊 Economics</span>
+                        <span class="book-grade-badge">Grade 10</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Economics Grade 10</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/grade 10-economics_fetena_net_e38f.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- ICT -->
+                <div class="book-card grade10">
+                    <div class="book-cover">
+                        <span class="book-subject">💻 ICT</span>
+                        <span class="book-grade-badge">Grade 10</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">ICT Grade 10</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/grade 10-ict_fetena_net_c905.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- HPE -->
+                <div class="book-card grade10">
+                    <div class="book-cover">
+                        <span class="book-subject">⚽ HPE</span>
+                        <span class="book-grade-badge">Grade 10</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">HPE Grade 10</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/G10-HPE.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Citizenship -->
+                <div class="book-card grade10">
+                    <div class="book-cover">
+                        <span class="book-subject">🏛️ Civics</span>
+                        <span class="book-grade-badge">Grade 10</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Citizenship Grade 10</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/G10-Citizenship.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Geography - Coming Soon -->
+                <div class="book-card coming-soon">
+                    <i class="fas fa-clock"></i>
+                    <p>Geography Grade 10</p>
+                    <small>Coming Soon</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRADE 11 SECTION - RED -->
+        <div id="grade11" class="grade-section">
+            <h2 class="grade-title grade11">
+                <i class="fas fa-graduation-cap"></i> GRADE 11 TEXTBOOKS
+            </h2>
+            
+            <div class="books-grid">
+                <!-- Biology -->
+                <div class="book-card grade11">
+                    <div class="book-cover">
+                        <span class="book-subject">🧬 Biology</span>
+                        <span class="book-grade-badge">Grade 11</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Biology Grade 11</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/Biology Grade 11 STB🄼🅃 🄱🄾🄾🄺.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Chemistry -->
+                <div class="book-card grade11">
+                    <div class="book-cover">
+                        <span class="book-subject">🧪 Chemistry</span>
+                        <span class="book-grade-badge">Grade 11</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Chemistry Grade 11</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/Chemistry Grade 11 STB🄼🅃 🄱🄾🄾🄺.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Physics -->
+                <div class="book-card grade11">
+                    <div class="book-cover">
+                        <span class="book-subject">⚛️ Physics</span>
+                        <span class="book-grade-badge">Grade 11</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Physics Grade 11</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/Physics Grade 11 STB🄼🅃 🄱🄾🄾🄺.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mathematics -->
+                <div class="book-card grade11">
+                    <div class="book-cover">
+                        <span class="book-subject">📐 Mathematics</span>
+                        <span class="book-grade-badge">Grade 11</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Mathematics Grade 11</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/grade 11-mathematics_fetena_net_67b9.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- English -->
+                <div class="book-card grade11">
+                    <div class="book-cover">
+                        <span class="book-subject">📝 English</span>
+                        <span class="book-grade-badge">Grade 11</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">English Grade 11</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/grade 11-english_fetena_net_2b7b.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Geography -->
+                <div class="book-card grade11">
+                    <div class="book-cover">
+                        <span class="book-subject">🌍 Geography</span>
+                        <span class="book-grade-badge">Grade 11</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Geography Grade 11</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/Geography Grade 11 ST 🄼🅃 🄱🄾🄾🄺 (2).pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- History -->
+                <div class="book-card grade11">
+                    <div class="book-cover">
+                        <span class="book-subject">📜 History</span>
+                        <span class="book-grade-badge">Grade 11</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">History Grade 11</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/History Grade 11ST 🄼🅃 🄱🄾🄾🄺.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Economics -->
+                <div class="book-card grade11">
+                    <div class="book-cover">
+                        <span class="book-subject">📊 Economics</span>
+                        <span class="book-grade-badge">Grade 11</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Economics Grade 11</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/Economics Grade 11 STB🄼🅃 🄱🄾🄾🄺 (1).pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Agriculture -->
+                <div class="book-card grade11">
+                    <div class="book-cover">
+                        <span class="book-subject">🌱 Agriculture</span>
+                        <span class="book-grade-badge">Grade 11</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Agriculture Grade 11</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/Agriculture Grade 11 STB🄼🅃 🄱🄾🄾🄺 (1).pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- IT -->
+                <div class="book-card grade11">
+                    <div class="book-cover">
+                        <span class="book-subject">💻 IT</span>
+                        <span class="book-grade-badge">Grade 11</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">IT Grade 11</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/IT Grade 11 ST 🄼🅃 🄱🄾🄾🄺.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Accounting - Coming Soon -->
+                <div class="book-card coming-soon">
+                    <i class="fas fa-clock"></i>
+                    <p>Accounting Grade 11</p>
+                    <small>Coming Soon</small>
+                </div>
+
+                <!-- Amharic - Coming Soon -->
+                <div class="book-card coming-soon">
+                    <i class="fas fa-clock"></i>
+                    <p>Amharic Grade 11</p>
+                    <small>Coming Soon</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRADE 12 SECTION - BLUE -->
+        <div id="grade12" class="grade-section">
+            <h2 class="grade-title grade12">
+                <i class="fas fa-graduation-cap"></i> GRADE 12 TEXTBOOKS
+            </h2>
+            
+            <div class="books-grid">
+                <!-- Biology -->
+                <div class="book-card grade12">
+                    <div class="book-cover">
+                        <span class="book-subject">🧬 Biology</span>
+                        <span class="book-grade-badge">Grade 12</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Biology Grade 12</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/G12-Biology.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Chemistry -->
+                <div class="book-card grade12">
+                    <div class="book-cover">
+                        <span class="book-subject">🧪 Chemistry</span>
+                        <span class="book-grade-badge">Grade 12</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Chemistry Grade 12</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/G12-Chemistry.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Physics -->
+                <div class="book-card grade12">
+                    <div class="book-cover">
+                        <span class="book-subject">⚛️ Physics</span>
+                        <span class="book-grade-badge">Grade 12</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Physics Grade 12</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/G12-Physics.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mathematics -->
+                <div class="book-card grade12">
+                    <div class="book-cover">
+                        <span class="book-subject">📐 Mathematics</span>
+                        <span class="book-grade-badge">Grade 12</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Mathematics Grade 12</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/G12-Mathematics.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- English -->
+                <div class="book-card grade12">
+                    <div class="book-cover">
+                        <span class="book-subject">📝 English</span>
+                        <span class="book-grade-badge">Grade 12</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">English Grade 12</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/G12-English-STB-2023-web.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Geography -->
+                <div class="book-card grade12">
+                    <div class="book-cover">
+                        <span class="book-subject">🌍 Geography</span>
+                        <span class="book-grade-badge">Grade 12</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Geography Grade 12</h3>
+                        <div class="book-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <a href="../css.css/photo/G12- geography- text book @Ethiopian_Digital_Library.pdf" class="download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD
+                        </a>
+                    </div>
+                </div>
+
+                <!-- History - Coming Soon -->
+                <div class="book-card coming-soon">
+                    <i class="fas fa-clock"></i>
+                    <p>History Grade 12</p>
+                    <small>Coming Soon</small>
+                </div>
+
+                <!-- Economics - Coming Soon -->
+                <div class="book-card coming-soon">
+                    <i class="fas fa-clock"></i>
+                    <p>Economics Grade 12</p>
+                    <small>Coming Soon</small>
+                </div>
+
+                <!-- Accounting - Coming Soon -->
+                <div class="book-card coming-soon">
+                    <i class="fas fa-clock"></i>
+                    <p>Accounting Grade 12</p>
+                    <small>Coming Soon</small>
+                </div>
+
+                <!-- Amharic - Coming Soon -->
+                <div class="book-card coming-soon">
+                    <i class="fas fa-clock"></i>
+                    <p>Amharic Grade 12</p>
+                    <small>Coming Soon</small>
+                </div>
+
+                <!-- Agriculture - Coming Soon -->
+                <div class="book-card coming-soon">
+                    <i class="fas fa-clock"></i>
+                    <p>Agriculture Grade 12</p>
+                    <small>Coming Soon</small>
+                </div>
+
+                <!-- IT - Coming Soon -->
+                <div class="book-card coming-soon">
+                    <i class="fas fa-clock"></i>
+                    <p>IT Grade 12</p>
+                    <small>Coming Soon</small>
+                </div>
+
+</div>
+
+        <!-- Library Stats -->
+        <div class="library-stats">
+            <div class="stat-card grade9">
+                <div class="stat-number">9</div>
+                <div class="stat-label">Grade 9 Books</div>
+            </div>
+            <div class="stat-card grade10">
+                <div class="stat-number">10</div>
+                <div class="stat-label">Grade 10 Books</div>
+            </div>
+            <div class="stat-card grade11">
+                <div class="stat-number">11</div>
+                <div class="stat-label">Grade 11 Books</div>
+            </div>
+            <div class="stat-card grade12">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Grade 12 Books</div>
+            </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="nav-links">
+            <a href="/../htmlll/digital liberary for 11 and 12" class="nav-link">
+                <i class="fas fa-arrow-left"></i>
+                PREVIOUS LIBRARY
+            </a>
+            <a href="/../htmlll/digital libera" class="nav-link">
+                MAIN LIBRARY
+                <i class="fas fa-home"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-quote">
+            "Once you stop learning, you start dying."
+        </div>
+        <div class="footer-author">
+            - Albert Einstein
+        </div>
+        <div class="footer-credit">
+            <p>© 2026 Debre Markos Secondary Preparatory School - Complete Digital Library</p>
+            <p style="margin-top: 10px; font-size: 12px;">Made with <i class="fas fa-heart"></i> by Debre Markos High School Programming Group</p>
+            <p style="margin-top: 5px; font-size: 11px;">Grades 9, 10, 11 & 12 - Ethiopian Curriculum</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Scroll to specific grade section
+        function scrollToGrade(gradeId) {
+            const element = document.getElementById(gradeId);
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // Update active button
+            const buttons = document.querySelectorAll('.grade-nav-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Add hover effect for book cards
+        document.querySelectorAll('.book-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        });
+
+        // Confirm before download
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (!confirm('Do you want to download this textbook?')) {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        // Highlight active section on scroll
+        window.addEventListener('scroll', function() {
+            const sections = ['grade9', 'grade10', 'grade11', 'grade12'];
+            const navButtons = document.querySelectorAll('.grade-nav-btn');
+            
+            let current = '';
+            
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                const sectionTop = section.offsetTop - 200;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                
+                if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+                    current = sectionId;
+                }
+            });
+            
+            navButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.grade === current.replace('grade', '')) {
+                    btn.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

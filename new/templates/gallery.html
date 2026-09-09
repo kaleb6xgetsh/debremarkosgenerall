@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>OUR GALLERY - Debre Markos Secondary Preparatory School</title>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --silver-100: #f8f9fa;
+            --silver-200: #e9ecef;
+            --silver-300: #dee2e6;
+            --silver-400: #ced4da;
+            --silver-500: #adb5bd;
+            --silver-600: #868e96;
+            --silver-700: #495057;
+            --silver-800: #343a40;
+            --silver-900: #212529;
+            --silver-metallic: #c0c0c0;
+            --silver-dark: #2c2c2c;
+            --ethio-green: #078930;
+            --ethio-yellow: #FCDD09;
+            --ethio-red: #DA121A;
+            --shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--silver-200), var(--silver-400));
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Ethiopian Flag Banner */
+        .ethiopian-flag {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            height: 5px;
+            z-index: 1000;
+        }
+
+        .ethiopian-flag .green { flex: 1; background: var(--ethio-green); }
+        .ethiopian-flag .yellow { flex: 1; background: var(--ethio-yellow); }
+        .ethiopian-flag .red { flex: 1; background: var(--ethio-red); }
+
+        /* Back Button */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            animation: slideInLeft 0.8s ease;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .back-button a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background: var(--silver-800);
+            border: 2px solid var(--silver-500);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+        }
+
+        .back-button a:hover {
+            background: var(--silver-900);
+            transform: translateX(-10px) scale(1.05);
+            border-color: var(--silver-300);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .back-button i {
+            font-size: 18px;
+        }
+
+        /* Main Container */
+        .gallery-container {
+            max-width: 1400px;
+            margin: 100px auto 50px;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header Section */
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease;
+            position: relative;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, var(--silver-300), var(--silver-500));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--silver-800);
+            border: 4px solid var(--silver-600);
+            box-shadow: var(--shadow);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        .gallery-header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--silver-900);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+        }
+
+        .gallery-header p {
+            font-size: 18px;
+            color: var(--silver-700);
+            font-weight: 300;
+        }
+
+        /* Silver Divider */
+        .silver-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        .silver-line {
+            height: 2px;
+            width: 100px;
+            background: linear-gradient(90deg, transparent, var(--silver-600), transparent);
+        }
+
+        .silver-diamond {
+            width: 10px;
+            height: 10px;
+            background: var(--silver-600);
+            transform: rotate(45deg);
+        }
+
+        /* Gallery Stats */
+        .gallery-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 20px 40px;
+            border-radius: 60px;
+            border: 1px solid var(--silver-400);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--silver-600);
+        }
+
+        .stat-item i {
+            font-size: 30px;
+            color: var(--silver-700);
+        }
+
+        .stat-info {
+            text-align: left;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--silver-900);
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--silver-600);
+        }
+
+        /* Gallery Section Title */
+        .section-title {
+            text-align: center;
+            margin: 60px 0 30px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            font-weight: 600;
+            color: var(--silver-800);
+            display: inline-block;
+            padding: 0 30px;
+            background: linear-gradient(135deg, var(--silver-200), var(--silver-400));
+            border-radius: 60px;
+            padding: 15px 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--silver-500);
+        }
+
+        .section-title h2 i {
+            margin-right: 10px;
+            color: var(--silver-700);
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Gallery Card */
+        .gallery-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--silver-300);
+            position: relative;
+            animation: cardFloat 6s ease-in-out infinite;
+        }
+
+        .gallery-card:nth-child(odd) {
+            animation-delay: 0s;
+        }
+
+        .gallery-card:nth-child(even) {
+            animation-delay: 3s;
+        }
+
+        @keyframes cardFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--silver-600);
+        }
+
+        /* Image Container */
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            height: 280px;
+            cursor: pointer;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-card:hover .image-container img {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        /* Image Overlay */
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            opacity: 0;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+        }
+
+        .gallery-card:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .overlay-content {
+            color: white;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .gallery-card:hover .overlay-content {
+            transform: translateY(0);
+        }
+
+        .overlay-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .overlay-content p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .overlay-content i {
+            margin-right: 5px;
+            color: var(--ethio-yellow);
+        }
+
+        /* Image Badge */
+        .image-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--silver-800);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 5;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--silver-500);
+        }
+
+        .image-badge i {
+            margin-right: 5px;
+            color: var(--ethio-yellow);
+        }
+
+        /* Card Footer */
+        .card-footer {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--silver-100);
+            border-top: 1px solid var(--silver-300);
+        }
+
+        .card-info {
+            display: flex;
+            gap: 15px;
+        }
+
+        .card-info span {
+            font-size: 13px;
+            color: var(--silver-600);
+        }
+
+        .card-info i {
+            margin-right: 5px;
+            color: var(--silver-700);
+        }
+
+        .view-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--silver-300);
+            border: none;
+            border-radius: 50%;
+            color: var(--silver-800);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .view-btn:hover {
+            background: var(--silver-700);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Lightbox Modal */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .lightbox.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+            animation: zoomIn 0.5s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 20px;
+            border: 4px solid white;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+            background: var(--ethio-red);
+            color: white;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 20px;
+            border-radius: 30px;
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .loading-spinner i {
+            font-size: 50px;
+            color: var(--silver-600);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* No Images Message */
+        .no-images {
+            text-align: center;
+            padding: 100px;
+            color: var(--silver-600);
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 30px;
+            border: 2px dashed var(--silver-400);
+        }
+
+        .no-images i {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: var(--silver-500);
+        }
+
+        /* Footer */
+        .gallery-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--silver-800), var(--silver-900));
+            border-radius: 60px;
+            color: white;
+            border: 1px solid var(--silver-600);
+        }
+
+        .gallery-footer p {
+            margin: 10px 0;
+            font-size: 14px;
+            color: var(--silver-400);
+        }
+
+        .gallery-footer i {
+            color: var(--ethio-red);
+        }
+
+        .footer-credit {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--silver-700);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            .gallery-header h1 {
+                font-size: 32px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 24px;
+                padding: 12px 20px;
+            }
+
+            .gallery-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stat-item {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-header h1 {
+                font-size: 24px;
+            }
+
+            .image-container {
+                height: 200px;
+            }
+
+            .card-footer {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .back-button,
+            .gallery-footer,
+            .view-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Ethiopian Flag Banner -->
+    <div class="ethiopian-flag">
+        <div class="green"></div>
+        <div class="yellow"></div>
+        <div class="red"></div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="back-button">
+        <a href="/../htmlll/html1">
+            <i class="fas fa-arrow-left"></i>
+            <span>BACK TO HOME</span>
+        </a>
+    </div>
+
+    <!-- Main Gallery Container -->
+    <div class="gallery-container">
+        <!-- Header -->
+        <div class="gallery-header">
+            <div class="header-icon">
+                <i class="fas fa-images"></i>
+            </div>
+            <h1>DEBRE MARKOS SECONDARY Preparatoryschool</h1>
+            <p>GALLERY</p>
+            
+            <!-- Silver Divider -->
+            <div class="silver-divider">
+                <div class="silver-line"></div>
+                <div class="silver-diamond"></div>
+                <div class="silver-line"></div>
+            </div>
+        </div>
+
+        <!-- Gallery Stats -->
+        <div class="gallery-stats">
+            <div class="stat-item">
+                <i class="fas fa-images"></i>
+                <div class="stat-info">
+                    <div class="stat-number" id="photoCount">10</div>
+                    <div class="stat-label">Total Photos</div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-calendar"></i>
+                <div class="stat-info">
+                    <div class="stat-number">2025</div>
+                    <div class="stat-label">Latest Update</div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-eye"></i>
+                <div class="stat-info">
+                    <div class="stat-number" id="viewCount">0</div>
+                    <div class="stat-label">Views</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- School Photos Section -->
+        <div class="section-title">
+            <h2>
+                <i class="fas fa-school"></i> SCHOOL PHOTO GALLERY
+            </h2>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- IMAGE 1 -->
+            <div class="gallery-card" data-index="0">
+                <div class="image-container">
+                    <img src="../css.css/photo/IMG_20251127_152225_800.jpg" alt="School Photo 1" loading="lazy">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3><i class="fas fa-school"></i>HALL</h3>
+                            <p><i class="fas fa-calendar"></i> 2025</p>
+                        </div>
+                    </div>
+                    <div class="image-badge">
+                        <i class="fas fa-camera"></i> Photo 1/10
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="card-info">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">0</span></span>
+                        <span><i class="fas fa-heart"></i> 0</span>
+                    </div>
+                    <button class="view-btn" onclick="openLightbox(0)">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- IMAGE 2 -->
+            <div class="gallery-card" data-index="1">
+                <div class="image-container">
+                    <img src="../css.css/photo/IMG_20251127_152230_484.jpg" alt="School Photo 2" loading="lazy">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3><i class="fas fa-school"></i> OFFICE</h3>
+                            <p><i class="fas fa-calendar"></i> 2025</p>
+                        </div>
+                    </div>
+                    <div class="image-badge">
+                        <i class="fas fa-camera"></i> Photo 2/10
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="card-info">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">0</span></span>
+                        <span><i class="fas fa-heart"></i> 0</span>
+                    </div>
+                    <button class="view-btn" onclick="openLightbox(1)">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- IMAGE 3 -->
+            <div class="gallery-card" data-index="2">
+                <div class="image-container">
+                    <img src="../css.css/photo/IMG_20251127_152230_600.jpg" alt="School Photo 3" loading="lazy">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3><i class="fas fa-school"></i>labratory</h3>
+                            <p><i class="fas fa-calendar"></i> 2025</p>
+                        </div>
+                    </div>
+                    <div class="image-badge">
+                        <i class="fas fa-camera"></i> Photo 3/10
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="card-info">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">0</span></span>
+                        <span><i class="fas fa-heart"></i> 0</span>
+                    </div>
+                    <button class="view-btn" onclick="openLightbox(2)">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- IMAGE 4 -->
+            <div class="gallery-card" data-index="3">
+                <div class="image-container">
+                    <img src="../css.css/photo/IMG_20251127_152231_343.jpg" alt="School Photo 4" loading="lazy">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3><i class="fas fa-school"></i> STAFF
+                            
+                        </h3>
+                            <p><i class="fas fa-calendar"></i> 2025</p>
+                        </div>
+                    </div>
+                    <div class="image-badge">
+                        <i class="fas fa-camera"></i> Photo 4/10
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="card-info">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">0</span></span>
+                        <span><i class="fas fa-heart"></i> 0</span>
+                    </div>
+                    <button class="view-btn" onclick="openLightbox(3)">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- IMAGE 5 -->
+            <div class="gallery-card" data-index="4">
+                <div class="image-container">
+                    <img src="../css.css/photo/IMG_20251127_152242_128.jpg" alt="School Photo 5" loading="lazy">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3><i class="fas fa-school"></i> CLASS</h3>
+                            <p><i class="fas fa-calendar"></i> 2025</p>
+                        </div>
+                    </div>
+                    <div class="image-badge">
+                        <i class="fas fa-camera"></i> Photo 5/10
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="card-info">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">0</span></span>
+                        <span><i class="fas fa-heart"></i> 0</span>
+                    </div>
+                    <button class="view-btn" onclick="openLightbox(4)">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- IMAGE 6 -->
+            <div class="gallery-card" data-index="5">
+                <div class="image-container">
+                    <img src="../css.css/photo/IMG_20251127_152242_192.jpg" alt="School Photo 6" loading="lazy">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3><i class="fas fa-school"></i> Laboratory</h3>
+                            <p><i class="fas fa-calendar"></i> 2025</p>
+                        </div>
+                    </div>
+                    <div class="image-badge">
+                        <i class="fas fa-camera"></i> Photo 6/10
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="card-info">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">0</span></span>
+                        <span><i class="fas fa-heart"></i> 0</span>
+                    </div>
+                    <button class="view-btn" onclick="openLightbox(5)">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- IMAGE 7 -->
+            <div class="gallery-card" data-index="6">
+                <div class="image-container">
+                    <img src="../css.css/photo/IMG_20251127_152242_245.jpg" alt="School Photo 7" loading="lazy">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3><i class="fas fa-school"></i> Labratory class</h3>
+                            <p><i class="fas fa-calendar"></i> 2025</p>
+                        </div>
+                    </div>
+                    <div class="image-badge">
+                        <i class="fas fa-camera"></i> Photo 7/10
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="card-info">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">0</span></span>
+                        <span><i class="fas fa-heart"></i> 0</span>
+                    </div>
+                    <button class="view-btn" onclick="openLightbox(6)">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- IMAGE 8 -->
+            <div class="gallery-card" data-index="7">
+                <div class="image-container">
+                    <img src="../css.css/photo/IMG_20251127_152242_456.jpg" alt="School Photo 8" loading="lazy">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3><i class="fas fa-school"></i> Liberary </h3>
+                            <p><i class="fas fa-calendar"></i> 2025</p>
+                        </div>
+                    </div>
+                    <div class="image-badge">
+                        <i class="fas fa-camera"></i> Photo 8/10
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="card-info">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">0</span></span>
+                        <span><i class="fas fa-heart"></i> 0</span>
+                    </div>
+                    <button class="view-btn" onclick="openLightbox(7)">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- IMAGE 9 -->
+            <div class="gallery-card" data-index="8">
+                <div class="image-container">
+                    <img src="../css.css/photo/IMG_20251127_152242_643.jpg" alt="School Photo 9" loading="lazy">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3><i class="fas fa-school"></i> Computer class</h3>
+                            <p><i class="fas fa-calendar"></i> 2025</p>
+                        </div>
+                    </div>
+                    <div class="image-badge">
+                        <i class="fas fa-camera"></i> Photo 9/10
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="card-info">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">0</span></span>
+                        <span><i class="fas fa-heart"></i> 0</span>
+                    </div>
+                    <button class="view-btn" onclick="openLightbox(8)">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lightbox Modal -->
+        <div class="lightbox" id="lightbox">
+            <button class="lightbox-close" onclick="closeLightbox()">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="lightbox-content" id="lightboxContent">
+                <img src="" alt="Lightbox Image" id="lightboxImage">
+            </div>
+            <button class="lightbox-nav lightbox-next" onclick="changeImage(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="lightbox-counter" id="lightboxCounter"></div>
+        </div>
+
+        <!-- Gallery Footer -->
+        <div class="gallery-footer">
+            <p><i class="fas fa-camera"></i> Capturing Memories at Debre Markos Secondary Preparatory
+                 School</p>
+
+            <div class="footer-credit">
+                <p>© 2025 All Rights Reserved</p>
+                <p>Made with <i class="fas fa-heart"></i> by PRI Developers</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Gallery data
+        const images = [
+            '../css.css/photo/IMG_20251127_152225_800.jpg',
+            '../css.css/photo/IMG_20251127_152230_484.jpg',
+            '../css.css/photo/IMG_20251127_152230_600.jpg',
+            '../css.css/photo/IMG_20251127_152231_343.jpg',
+            '../css.css/photo/IMG_20251127_152242_128.jpg',
+            '../css.css/photo/IMG_20251127_152242_192.jpg',
+            '../css.css/photo/IMG_20251127_152242_245.jpg',
+            '../css.css/photo/IMG_20251127_152242_456.jpg',
+            '../css.css/photo/IMG_20251127_152242_643.jpg'
+        ];
+
+        let currentIndex = 0;
+        let viewCounts = new Array(images.length).fill(0);
+
+        // Update photo count
+        document.getElementById('photoCount').textContent = images.length;
+
+        // Lightbox functions
+        function openLightbox(index) {
+            currentIndex = index;
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            
+            lightboxImage.src = images[currentIndex];
+            updateCounter();
+            lightbox.classList.add('active');
+            
+            // Increment view count
+            viewCounts[currentIndex]++;
+            updateViewCounts();
+            
+            // Update total views
+            const totalViews = viewCounts.reduce((a, b) => a + b, 0);
+            document.getElementById('viewCount').textContent = totalViews;
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        function changeImage(direction) {
+            currentIndex += direction;
+            
+            if (currentIndex < 0) {
+                currentIndex = images.length - 1;
+            } else if (currentIndex >= images.length) {
+                currentIndex = 0;
+            }
+            
+            document.getElementById('lightboxImage').src = images[currentIndex];
+            updateCounter();
+            
+            // Increment view count for this image
+            viewCounts[currentIndex]++;
+            updateViewCounts();
+            
+            // Update total views
+            const totalViews = viewCounts.reduce((a, b) => a + b, 0);
+            document.getElementById('viewCount').textContent = totalViews;
+        }
+
+        function updateCounter() {
+            const counter = document.getElementById('lightboxCounter');
+            counter.textContent = `${currentIndex + 1} / ${images.length}`;
+        }
+
+        function updateViewCounts() {
+            const viewElements = document.querySelectorAll('.view-count');
+            viewElements.forEach((el, index) => {
+                if (index < viewCounts.length) {
+                    el.textContent = viewCounts[index];
+                }
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const lightbox = document.getElementById('lightbox');
+            
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    changeImage(-1);
+                } else if (e.key === 'ArrowRight') {
+                    changeImage(1);
+                }
+            }
+        });
+
+        // Lazy loading with Intersection Observer
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src || img.src;
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        // Image error handling
+        document.querySelectorAll('img').forEach(img => {
+            img.onerror = function() {
+                this.src = 'https://via.placeholder.com/400x300?text=Image+Not+Found';
+                this.alt = 'Image failed to load';
+            };
+        });
+
+        // Initialize view counts
+        updateViewCounts();
+    </script>
+</body>
+</html>

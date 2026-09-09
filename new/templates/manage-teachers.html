@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Manage Teachers - Admin Panel | Debre Markos Secondary School</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #047857;
+            --ethio-green: #078930;
+            --ethio-yellow: #FCDD09;
+            --ethio-red: #DA121A;
+            --text-dark: #1f2937;
+            --text-soft: #4b5563;
+            --bg-light: #f9fafb;
+            --shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: #f0f4f8;
+        }
+
+        .ethiopian-flag {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            height: 5px;
+            z-index: 1001;
+        }
+        .ethiopian-flag .green { flex: 1; background: var(--ethio-green); }
+        .ethiopian-flag .yellow { flex: 1; background: var(--ethio-yellow); }
+        .ethiopian-flag .red { flex: 1; background: var(--ethio-red); }
+
+        nav {
+            width: 100%;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #e5e7eb;
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 5px;
+            left: 0;
+            z-index: 999;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary-green);
+        }
+        .nav-logo i {
+            margin-right: 8px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+        .nav-links a.active {
+            background: var(--primary-green);
+            color: white;
+        }
+        .nav-links a.logout {
+            background: var(--ethio-red);
+            color: white;
+        }
+        .nav-links a.logout:hover {
+            background: #b91c1c;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        .main-content {
+            padding-top: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 40px;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .page-header p {
+            color: var(--text-soft);
+            font-size: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-primary {
+            background: var(--ethio-red);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: var(--primary-green);
+            transform: translateY(-2px);
+        }
+        .btn-success {
+            background: var(--primary-green);
+            color: white;
+        }
+        .btn-success:hover {
+            background: #065f46;
+        }
+        .btn-danger {
+            background: var(--ethio-red);
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+        .btn-secondary {
+            background: #e5e7eb;
+            color: var(--text-dark);
+        }
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+        .btn-sm {
+            padding: 5px 14px;
+            font-size: 12px;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 14px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+        .stat-card .number {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary-green);
+        }
+        .stat-card .label {
+            font-size: 11px;
+            color: var(--text-soft);
+        }
+
+        .search-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-soft);
+        }
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border-radius: 30px;
+            border: 1px solid #e5e7eb;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        .teachers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .teacher-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+        }
+        .teacher-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .teacher-header {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            padding: 18px;
+            text-align: center;
+            color: white;
+        }
+        .teacher-avatar {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-size: 28px;
+            color: #2563eb;
+        }
+        .teacher-name {
+            font-size: 17px;
+            font-weight: 700;
+        }
+        .teacher-subject {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        .teacher-body {
+            padding: 15px 18px;
+        }
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 13px;
+        }
+        .info-row i {
+            width: 20px;
+            color: #2563eb;
+        }
+        .teacher-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 12px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 28px;
+            max-width: 550px;
+            width: 90%;
+            padding: 30px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .modal-content h3 {
+            color: #2563eb;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-dark);
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            border: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-soft);
+            grid-column: 1 / -1;
+        }
+        .empty-state i {
+            font-size: 48px;
+            opacity: 0.4;
+            margin-bottom: 10px;
+        }
+
+        .alert {
+            padding: 12px 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: none;
+            font-size: 14px;
+        }
+        .alert-success {
+            background: #dcfce7;
+            color: #166534;
+            border-left: 4px solid #22c55e;
+        }
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 10px 16px; }
+            .nav-links { display: none; flex-direction: column; width: 100%; padding-top: 10px; }
+            .nav-links.show { display: flex; }
+            .nav-links a { width: 100%; text-align: center; padding: 8px; }
+            .menu-toggle { display: block; }
+            .main-content { padding-top: 70px; }
+            .teachers-grid { grid-template-columns: 1fr; }
+            .search-section { flex-direction: column; align-items: stretch; }
+            .form-row { grid-template-columns: 1fr; }
+            .page-header { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ethiopian-flag">
+        <div class="green"></div>
+        <div class="yellow"></div>
+        <div class="red"></div>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo"><i class="fas fa-school"></i> DMSS</div>
+            <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            <div class="nav-links" id="navLinks">
+                <a href="/adminhome">← Back</a>
+                <a href="/admin-report">Reports</a>
+                <a href="/post-news">News</a>
+                <a href="/manage-teachers" class="active">Teachers</a>
+                <a href="/manage-students">Students</a>
+                <a href="/manage-parents">Parents</a>
+                <a href="/profile">Profile</a>
+                <a href="/logout" class="logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="page-header">
+            <div>
+                <h1>👨‍🏫 Manage Teachers</h1>
+                <p>Add, edit, and remove teacher accounts</p>
+            </div>
+            <button class="btn btn-primary" onclick="openAddModal()"><i class="fas fa-user-plus"></i> Add Teacher</button>
+        </div>
+
+        <div id="alertMessage" class="alert"></div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-card"><div class="number" id="totalTeachers">0</div><div class="label">Total</div></div>
+            <div class="stat-card"><div class="number" id="activeTeachers">0</div><div class="label">Active</div></div>
+            <div class="stat-card"><div class="number" id="deptCount">0</div><div class="label">Departments</div></div>
+        </div>
+
+        <!-- Search -->
+        <div class="search-section">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by name, subject, or department...">
+            </div>
+        </div>
+
+        <!-- Teachers Grid -->
+        <div class="teachers-grid" id="teachersContainer"></div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div id="teacherModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle"><i class="fas fa-user-plus"></i> Add Teacher</h3>
+            <form id="teacherForm">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="teacherName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" id="teacherEmail" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <select id="teacherSubject">
+                            <option value="">Select</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="English">English</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Biology">Biology</option>
+                            <option value="History">History</option>
+                            <option value="Geography">Geography</option>
+                            <option value="ICT">ICT</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Department</label>
+                        <select id="teacherDepartment">
+                            <option value="">Select</option>
+                            <option value="Science">Science</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="Language">Language</option>
+                            <option value="Social">Social</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="teacherPhone" placeholder="+251-XXX-XXXX">
+                </div>
+                <div class="form-group">
+                    <label>Password *</label>
+                    <input type="password" id="teacherPassword" placeholder="Min 6 characters" required minlength="6">
+                </div>
+                <div id="editTeacherId" style="display:none;"></div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-success">Save Teacher</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // Toggle Mobile Menu
+        // ============================================
+
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('show');
+        }
+
+        // ============================================
+        // Get Current User
+        // ============================================
+
+        const currentUser = JSON.parse(sessionStorage.getItem('current_user')) || JSON.parse(localStorage.getItem('current_user'));
+
+        if (!currentUser || currentUser.role !== 'admin') {
+            window.location.href = '/login';
+        }
+
+        // ============================================
+        // Get Teachers
+        // ============================================
+
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('school_users')) || [];
+        }
+
+        function getTeachers() {
+            return getUsers().filter(u => u.role === 'teacher');
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('school_users', JSON.stringify(users));
+        }
+
+        let editingTeacherId = null;
+
+        // ============================================
+        // Render Teachers
+        // ============================================
+
+        function renderTeachers() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            let teachers = getTeachers();
+
+            if (searchTerm) {
+                teachers = teachers.filter(t => 
+                    t.name.toLowerCase().includes(searchTerm) ||
+                    (t.subject || '').toLowerCase().includes(searchTerm) ||
+                    (t.department || '').toLowerCase().includes(searchTerm)
+                );
+            }
+
+            // Update stats
+            const allTeachers = getTeachers();
+            document.getElementById('totalTeachers').innerHTML = allTeachers.length;
+            document.getElementById('activeTeachers').innerHTML = allTeachers.filter(t => t.status !== 'inactive').length;
+            const depts = [...new Set(allTeachers.map(t => t.department).filter(Boolean))];
+            document.getElementById('deptCount').innerHTML = depts.length;
+
+            const container = document.getElementById('teachersContainer');
+            if (teachers.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-chalkboard-user"></i>
+                        <p>${searchTerm ? 'No teachers found.' : 'No teachers registered yet.'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = teachers.map(t => `
+                <div class="teacher-card">
+                    <div class="teacher-header">
+                        <div class="teacher-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                        <div class="teacher-name">${t.name}</div>
+                        <div class="teacher-subject">${t.subject || 'N/A'} | ${t.department || 'N/A'}</div>
+                    </div>
+                    <div class="teacher-body">
+                        <div class="info-row"><i class="fas fa-envelope"></i><span>${t.email}</span></div>
+                        <div class="info-row"><i class="fas fa-phone"></i><span>${t.phone || 'N/A'}</span></div>
+                        <div class="teacher-actions">
+                            <button class="btn btn-secondary btn-sm" onclick="editTeacher(${t.id})"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteTeacher(${t.id})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================
+        // Open Add Modal
+        // ============================================
+
+        function openAddModal() {
+            editingTeacherId = null;
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-user-plus"></i> Add Teacher';
+            document.getElementById('teacherForm').reset();
+            document.getElementById('teacherPassword').required = true;
+            document.getElementById('teacherModal').style.display = 'flex';
+        }
+
+        // ============================================
+        // Edit Teacher
+        // ============================================
+
+        function editTeacher(id) {
+            const teacher = getUsers().find(u => u.id === id);
+            if (!teacher) return;
+
+            editingTeacherId = id;
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Teacher';
+            document.getElementById('teacherName').value = teacher.name;
+            document.getElementById('teacherEmail').value = teacher.email;
+            document.getElementById('teacherSubject').value = teacher.subject || '';
+            document.getElementById('teacherDepartment').value = teacher.department || '';
+            document.getElementById('teacherPhone').value = teacher.phone || '';
+            document.getElementById('teacherPassword').required = false;
+            document.getElementById('teacherPassword').placeholder = 'Leave blank to keep current';
+            document.getElementById('teacherModal').style.display = 'flex';
+        }
+
+        // ============================================
+        // Close Modal
+        // ============================================
+
+        function closeModal() {
+            document.getElementById('teacherModal').style.display = 'none';
+            document.getElementById('teacherForm').reset();
+            editingTeacherId = null;
+        }
+
+        // ============================================
+        // Handle Form Submit
+        // ============================================
+
+        document.getElementById('teacherForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('teacherName').value.trim();
+            const email = document.getElementById('teacherEmail').value.trim();
+            const subject = document.getElementById('teacherSubject').value;
+            const department = document.getElementById('teacherDepartment').value;
+            const phone = document.getElementById('teacherPhone').value.trim();
+            const password = document.getElementById('teacherPassword').value;
+            const alertDiv = document.getElementById('alertMessage');
+
+            if (!name || !email) {
+                alertDiv.innerHTML = '❌ Name and email are required.';
+                alertDiv.className = 'alert alert-error';
+                alertDiv.style.display = 'block';
+                setTimeout(() => alertDiv.style.display = 'none', 3000);
+                return;
+            }
+
+            let users = getUsers();
+
+            if (editingTeacherId) {
+                const index = users.findIndex(u => u.id === editingTeacherId);
+                if (index !== -1) {
+                    users[index].name = name;
+                    users[index].email = email;
+                    users[index].subject = subject;
+                    users[index].department = department;
+                    users[index].phone = phone;
+                    if (password) users[index].password = password;
+                    saveUsers(users);
+                    
+                    const profile = JSON.parse(localStorage.getItem(`user_profile_${email}`)) || {};
+                    profile.name = name;
+                    profile.email = email;
+                    profile.subject = subject;
+                    profile.department = department;
+                    profile.phone = phone;
+                    if (password) profile.password = password;
+                    localStorage.setItem(`user_profile_${email}`, JSON.stringify(profile));
+
+                    alertDiv.innerHTML = '✅ Teacher updated successfully!';
+                }
+            } else {
+                if (users.find(u => u.email === email)) {
+                    alertDiv.innerHTML = '❌ Email already registered.';
+                    alertDiv.className = 'alert alert-error';
+                    alertDiv.style.display = 'block';
+                    setTimeout(() => alertDiv.style.display = 'none', 3000);
+                    return;
+                }
+                if (!password) {
+                    alertDiv.innerHTML = '❌ Password is required.';
+                    alertDiv.className = 'alert alert-error';
+                    alertDiv.style.display = 'block';
+                    setTimeout(() => alertDiv.style.display = 'none', 3000);
+                    return;
+                }
+
+                const newTeacher = {
+                    id: Date.now(),
+                    name: name,
+                    email: email,
+                    password: password,
+                    role: 'teacher',
+                    subject: subject,
+                    department: department,
+                    phone: phone,
+                    status: 'active',
+                    created_at: new Date().toISOString()
+                };
+                users.push(newTeacher);
+                saveUsers(users);
+                localStorage.setItem(`user_profile_${email}`, JSON.stringify(newTeacher));
+
+                alertDiv.innerHTML = '✅ Teacher added successfully!';
+            }
+
+            alertDiv.className = 'alert alert-success';
+            alertDiv.style.display = 'block';
+            setTimeout(() => alertDiv.style.display = 'none', 3000);
+
+            closeModal();
+            renderTeachers();
+        });
+
+        // ============================================
+        // Delete Teacher
+        // ============================================
+
+        function deleteTeacher(id) {
+            if (confirm('Delete this teacher? This cannot be undone.')) {
+                let users = getUsers();
+                users = users.filter(u => u.id !== id);
+                saveUsers(users);
+                renderTeachers();
+                const alertDiv = document.getElementById('alertMessage');
+                alertDiv.innerHTML = '✅ Teacher deleted successfully.';
+                alertDiv.className = 'alert alert-success';
+                alertDiv.style.display = 'block';
+                setTimeout(() => alertDiv.style.display = 'none', 3000);
+            }
+        }
+
+        // ============================================
+        // Search Input
+        // ============================================
+
+        document.getElementById('searchInput').addEventListener('input', renderTeachers);
+
+        // ============================================
+        // Close Modal on Outside Click
+        // ============================================
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('teacherModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // ============================================
+        // Initial Render
+        // ============================================
+
+        renderTeachers();
+    </script>
+</body>
+</html>

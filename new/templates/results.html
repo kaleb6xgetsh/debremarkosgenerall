@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Results - Debre Markos Secondary School</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #047857;
+            --ethio-green: #078930;
+            --ethio-yellow: #FCDD09;
+            --ethio-red: #DA121A;
+            --text-dark: #1f2937;
+            --text-soft: #4b5563;
+            --bg-light: #f9fafb;
+            --shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            --grade-A: #22c55e;
+            --grade-B: #22c55e;
+            --grade-C: #f59e0b;
+            --grade-D: #f59e0b;
+            --grade-F: #ef4444;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: #f0f4f8;
+        }
+
+        .ethiopian-flag {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            height: 5px;
+            z-index: 1001;
+        }
+        .ethiopian-flag .green { flex: 1; background: var(--ethio-green); }
+        .ethiopian-flag .yellow { flex: 1; background: var(--ethio-yellow); }
+        .ethiopian-flag .red { flex: 1; background: var(--ethio-red); }
+
+        nav {
+            width: 100%;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #e5e7eb;
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 5px;
+            left: 0;
+            z-index: 999;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary-green);
+        }
+        .nav-logo i {
+            margin-right: 8px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+        .nav-links a.active {
+            background: var(--primary-green);
+            color: white;
+        }
+        .nav-links a.logout {
+            background: var(--ethio-red);
+            color: white;
+        }
+        .nav-links a.logout:hover {
+            background: #b91c1c;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        .main-content {
+            padding-top: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 40px;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .page-header p {
+            color: var(--text-soft);
+            font-size: 15px;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 18px;
+            padding: 18px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            box-shadow: var(--shadow);
+        }
+        .stat-card .value {
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--primary-green);
+        }
+        .stat-card .label {
+            font-size: 12px;
+            color: var(--text-soft);
+            margin-top: 4px;
+        }
+
+        /* Results Table */
+        .results-container {
+            background: white;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+        .results-table th {
+            background: var(--primary-green);
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .results-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .results-table tr:hover {
+            background: #f3f4f6;
+        }
+
+        .grade-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .grade-A { background: #dcfce7; color: #166534; }
+        .grade-B { background: #dcfce7; color: #166534; }
+        .grade-C { background: #fef3c7; color: #92400e; }
+        .grade-D { background: #fef3c7; color: #92400e; }
+        .grade-F { background: #fee2e2; color: #991b1b; }
+
+        .filter-section {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .filter-section select, .filter-section input {
+            padding: 10px 16px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            background: white;
+        }
+        .filter-section select:focus, .filter-section input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-soft);
+        }
+        .no-results i {
+            font-size: 48px;
+            opacity: 0.4;
+            margin-bottom: 12px;
+        }
+
+        .msg-badge {
+            position: relative;
+        }
+        .msg-badge .badge {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background: var(--ethio-red);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 30px;
+            min-width: 16px;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .btn-primary {
+            background: var(--ethio-red);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: transparent;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 10px 16px; }
+            .nav-links { display: none; flex-direction: column; width: 100%; padding-top: 10px; }
+            .nav-links.show { display: flex; }
+            .nav-links a { width: 100%; text-align: center; padding: 8px; }
+            .menu-toggle { display: block; }
+            .main-content { padding-top: 70px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .results-table { font-size: 12px; }
+            .results-table th, .results-table td { padding: 8px 10px; }
+            .filter-section { flex-direction: column; }
+            .filter-section select, .filter-section input { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ethiopian-flag">
+        <div class="green"></div>
+        <div class="yellow"></div>
+        <div class="red"></div>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo"><i class="fas fa-school"></i> DMSS</div>
+            <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            <div class="nav-links" id="navLinks">
+                <a href="#" id="backLink">← Back</a>
+                <a href="results.html" class="active">Results</a>
+                <a href="attendance.html">Attendance</a>
+                <a href="assignment.html">Assignments</a>
+                <a href="messages.html" class="msg-badge">Messages <span class="badge" id="msgBadge">0</span></a>
+                <a href="profile.html">Profile</a>
+                <a href="logout.html" class="logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content" id="mainContent">
+        <!-- Rendered by JavaScript -->
+    </div>
+
+    <script>
+        // ============================================
+        // Toggle Mobile Menu
+        // ============================================
+
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('show');
+        }
+
+        // ============================================
+        // Get Current User
+        // ============================================
+
+        const currentUser = JSON.parse(sessionStorage.getItem('current_user')) || JSON.parse(localStorage.getItem('current_user'));
+
+        if (!currentUser) {
+            window.location.href = '/login';
+        }
+
+        const roleLinks = {
+            'student': '/studenthome',
+            'teacher': '/teacherhome',
+            'parent': '/parenthome',
+            'admin': '/adminhome'
+        };
+        document.getElementById('backLink').href = roleLinks[currentUser.role] || '/';
+
+        let userProfile = JSON.parse(localStorage.getItem(`user_profile_${currentUser.email}`)) || currentUser;
+
+        // ============================================
+        // Get Unread Message Count
+        // ============================================
+
+        function getUnreadCount() {
+            const messages = JSON.parse(localStorage.getItem(`messages_${currentUser.email}`)) || {};
+            let count = 0;
+            Object.keys(messages).forEach(key => {
+                const msgs = messages[key] || [];
+                count += msgs.filter(m => !m.read && m.sender !== currentUser.email).length;
+            });
+            return count;
+        }
+
+        function updateBadge() {
+            const count = getUnreadCount();
+            const badge = document.getElementById('msgBadge');
+            if (badge) {
+                badge.textContent = count;
+                if (count === 0) {
+                    badge.style.display = 'none';
+                } else {
+                    badge.style.display = 'inline-block';
+                }
+            }
+        }
+
+        // ============================================
+        // Load Results from API
+        // ============================================
+
+        let allResults = [];
+
+        async function loadResults() {
+            try {
+                // Get student_id if user is student
+                let studentId = '';
+                if (currentUser.role === 'student') {
+                    studentId = currentUser.id;
+                }
+                
+                const url = `/api/results?student_id=${studentId}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.results) {
+                    allResults = data.results;
+                }
+                renderResults();
+            } catch (error) {
+                console.error('Error loading results:', error);
+                // Try localStorage fallback
+                allResults = JSON.parse(localStorage.getItem('exam_results_data')) || [];
+                renderResults();
+            }
+        }
+
+        // ============================================
+        // Calculate Grade
+        // ============================================
+
+        function calculateGrade(score) {
+            if (score >= 90) return 'A';
+            if (score >= 80) return 'B';
+            if (score >= 70) return 'C';
+            if (score >= 60) return 'D';
+            return 'F';
+        }
+
+        function getGradeClass(grade) {
+            return `grade-${grade}`;
+        }
+
+        // ============================================
+        // Render Results
+        // ============================================
+
+        function renderResults() {
+            const container = document.getElementById('mainContent');
+            const isStudent = currentUser.role === 'student';
+            const isTeacher = currentUser.role === 'teacher';
+            const isParent = currentUser.role === 'parent';
+            const isAdmin = currentUser.role === 'admin';
+
+            // Calculate stats
+            const totalSubjects = allResults.length;
+            let totalScore = 0;
+            let passed = 0;
+            let subjectNames = new Set();
+
+            allResults.forEach(r => {
+                totalScore += r.score || 0;
+                if (r.score >= 50) passed++;
+                if (r.subject) subjectNames.add(r.subject);
+            });
+
+            const average = totalSubjects > 0 ? (totalScore / totalSubjects).toFixed(1) : 0;
+            const passRate = totalSubjects > 0 ? Math.round((passed / totalSubjects) * 100) : 0;
+
+            // Filter controls
+            let filterHTML = '';
+            if (isTeacher || isAdmin) {
+                filterHTML = `
+                    <div class="filter-section">
+                        <select id="filterSubject" onchange="applyFilters()">
+                            <option value="">All Subjects</option>
+                            ${[...subjectNames].map(s => `<option value="${s}">${s}</option>`).join('')}
+                        </select>
+                        <select id="filterGrade" onchange="applyFilters()">
+                            <option value="">All Grades</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="F">F</option>
+                        </select>
+                        <input type="text" id="filterStudent" placeholder="Search student..." oninput="applyFilters()">
+                    </div>
+                `;
+            }
+
+            let resultsHTML = '';
+
+            if (allResults.length === 0) {
+                resultsHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>No Results Found</h3>
+                        <p>${isStudent ? 'No results have been published yet.' : 'No results available.'}</p>
+                    </div>
+                `;
+            } else {
+                let filteredResults = [...allResults];
+
+                // Apply filters
+                const subjectFilter = document.getElementById('filterSubject')?.value;
+                const gradeFilter = document.getElementById('filterGrade')?.value;
+                const studentFilter = document.getElementById('filterStudent')?.value?.toLowerCase();
+
+                if (subjectFilter) {
+                    filteredResults = filteredResults.filter(r => r.subject === subjectFilter);
+                }
+                if (gradeFilter) {
+                    filteredResults = filteredResults.filter(r => r.grade === gradeFilter);
+                }
+                if (studentFilter) {
+                    filteredResults = filteredResults.filter(r => 
+                        r.student_name?.toLowerCase().includes(studentFilter)
+                    );
+                }
+
+                if (filteredResults.length === 0) {
+                    resultsHTML = `
+                        <div class="no-results">
+                            <i class="fas fa-search"></i>
+                            <h3>No Results Match</h3>
+                            <p>Try changing your filters.</p>
+                        </div>
+                    `;
+                } else {
+                    resultsHTML = `
+                        <div class="results-container">
+                            <table class="results-table">
+                                <thead>
+                                    <tr>
+                                        ${isStudent || isParent ? '<th>Subject</th>' : '<th>Student</th>'}
+                                        <th>Subject</th>
+                                        <th>Exam Type</th>
+                                        <th>Score</th>
+                                        <th>Grade</th>
+                                        ${isTeacher || isAdmin ? '<th>Student</th>' : ''}
+                                        <th>Published</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${filteredResults.map(r => {
+                                        const grade = r.grade || calculateGrade(r.score);
+                                        return `
+                                            <tr>
+                                                ${isStudent || isParent ? `<td><strong>${r.subject}</strong></td>` : `<td>${r.student_name || 'N/A'}</td>`}
+                                                <td>${r.subject}</td>
+                                                <td>${r.exam_type || 'Exam'}</td>
+                                                <td><strong>${r.score}%</strong></td>
+                                                <td><span class="grade-badge ${getGradeClass(grade)}">${grade}</span></td>
+                                                ${isTeacher || isAdmin ? `<td>${r.student_name || 'N/A'}</td>` : ''}
+                                                <td>${r.published_at ? new Date(r.published_at).toLocaleDateString() : 'N/A'}</td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                }
+            }
+
+            container.innerHTML = `
+                <div class="page-header">
+                    <div>
+                        <h1>📊 Exam Results</h1>
+                        <p>${isStudent ? 'Your academic performance' : isParent ? 'Your child\'s academic performance' : 'Student examination results'}</p>
+                    </div>
+                    ${isTeacher ? `<a href="/post-result" class="btn btn-primary"><i class="fas fa-plus"></i> Post Results</a>` : ''}
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="value">${totalSubjects}</div>
+                        <div class="label">Subjects</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value">${average}%</div>
+                        <div class="label">Average Score</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value">${passRate}%</div>
+                        <div class="label">Pass Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value">${[...subjectNames].length}</div>
+                        <div class="label">Subjects</div>
+                    </div>
+                </div>
+
+                ${filterHTML}
+
+                ${resultsHTML}
+            `;
+
+            updateBadge();
+        }
+
+        // ============================================
+        // Apply Filters
+        // ============================================
+
+        function applyFilters() {
+            renderResults();
+        }
+
+        // ============================================
+        // Auto-refresh badge every 10 seconds
+        // ============================================
+
+        loadResults();
+
+        setInterval(() => {
+            updateBadge();
+        }, 10000);
+    </script>
+</body>
+</html>
